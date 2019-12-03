@@ -1,0 +1,37 @@
+{% block css %}
+	{{parent}}
+    {{css('css/style_ToDoList.css') | raw}}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="ui container">
+{%for container in containers%}
+{{container|raw}}
+{%endfor%}
+</div>
+<div id="response"></div>
+{{script_foot|raw}}

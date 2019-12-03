@@ -6,10 +6,10 @@ use Ubiquity\orm\DAO;
 use models\Item;
 use models\Slate;
  /**
- * Controller MainController
+ * Controller ToDo
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  **/
-class MainController extends ControllerBase{
+class ToDo extends ControllerBase{
 
     
 	public function index(){
@@ -50,7 +50,7 @@ class MainController extends ControllerBase{
 	    $pb->setTotal(count($labelitems));
 	    $pb->setTextValues(["active"=>"","success"=>""]);*/
 	    
-	    $this->jquery->getOnClick('tbody tr',"MainController/checkedlist" ,"#response", ['attr'=>'data-ajax']);
+	    $this->jquery->getOnClick('tbody tr',"ToDo/checkedlist" ,"#response", ['attr'=>'data-ajax']);
 	    
 		$this->jquery->renderDefaultView(compact('containers'));
 	}
