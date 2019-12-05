@@ -2,32 +2,7 @@
 	{{parent}}
     {{css('css/style_ToDoList.css') | raw}}
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+{{ _userInfo | raw }}
 <div class="ui container">
 {%for container in containers%}
 {{container|raw}}

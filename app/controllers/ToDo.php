@@ -5,13 +5,19 @@ namespace controllers;
 use Ubiquity\orm\DAO;
 use models\Item;
 use models\Slate;
+use models\User;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\controllers\auth\WithAuthTrait;
 use Ajax\semantic\html\elements\HtmlIcon;
-
- /**
+/**
  * Controller ToDo
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  **/
 class ToDo extends ControllerBase{
+	use WithAuthTrait;
+     protected function getAuthController(): AtcCtrl {				//A rajouter dans la page a afficher lors de la connexion
+             return new AtcCtrl();
+     }
 
     
 	public function index(){
@@ -68,4 +74,6 @@ class ToDo extends ControllerBase{
 	        echo $this->jquery->compile();
 	    }
 	}
+
+	
 }
