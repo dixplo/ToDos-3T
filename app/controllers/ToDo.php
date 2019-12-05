@@ -5,6 +5,8 @@ namespace controllers;
 use Ubiquity\orm\DAO;
 use models\Item;
 use models\Slate;
+use Ajax\semantic\html\elements\HtmlIcon;
+
  /**
  * Controller ToDo
  * @property \Ajax\php\ubiquity\JsUtils $jquery
@@ -18,30 +20,18 @@ class ToDo extends ControllerBase{
 	    $containers =[];
 	    foreach ($slate as $list){
 	        $items =$list->getItems();
-	        $container =$semantic->htmlSegment($list->getId());
-	        $container->addLabel($list->getTitle());
-	        
-	        $table =$semantic->dataTable("datatable", Item::class, $items);
-	        $table->addClass('very basic collapsing');
-	        $table->setFields(['checked', 'value', 'label']);
-	        $table->setCaptions(["Check","Quantity","Label"]);
-	        $table->setIdentifierFunction('getId');
-	        $table->fieldAsCheckbox('checked');
-	        $pb=$semantic->htmlProgress("progress");
-	        
-	        $nbCheked =0;
-	        foreach ($items as $mitem) {
-	            if ($mitem->getChecked()==1) {
-	                $nbCheked++;
-	            }
-	        }
+			
+			$card=$semantic->htmlCard("card3");
+			$card->addRevealImage("https://semantic-ui.com/images/avatar/large/jenny.jpg","https://semantic-ui.com/images/avatar/large/elliot.jpg","slide");
+			$card->addItemHeaderContent("Team Fu & Hess","Create in Sep 2014");
+			$card->addExtraContent(HtmlIcon::label("","users","2 members")->asLink("#"));
+			echo $card;
+
 	        $pb->setPercent($nbCheked/count($items)*100);//foreach compte nb checked 
 	        $pb->setTotal(count($items));
 	        $pb->setTextValues(["active"=>"","success"=>""]);
-	        $container->addContent($table);
-	        $container->addContent($pb);
 	        
-	        array_push($containers, $container);
+	        array_push($containers, $card);
 	    }
 	    
 	    
