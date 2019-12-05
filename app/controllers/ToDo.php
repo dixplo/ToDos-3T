@@ -27,15 +27,23 @@ class ToDo extends ControllerBase{
 	    foreach ($slate as $list){
 	        $items =$list->getItems();
 			
-			$card=$semantic->htmlCard("card3");
-			$card->addRevealImage("https://semantic-ui.com/images/avatar/large/jenny.jpg","https://semantic-ui.com/images/avatar/large/elliot.jpg","slide");
-			$card->addItemHeaderContent("Team Fu & Hess","Create in Sep 2014");
-			$card->addExtraContent(HtmlIcon::label("","users","2 members")->asLink("#"));
-			echo $card;
-
-	        $pb->setPercent($nbCheked/count($items)*100);//foreach compte nb checked 
-	        $pb->setTotal(count($items));
-	        $pb->setTextValues(["active"=>"","success"=>""]);
+			$card=$semantic->htmlCard($list->getId());
+			$card->addItemHeaderContent($list->getTitle(),count($items),$list->getDescription());
+			
+			if ($list->getTemplate()->getId()==2) {
+				$nbCheked =0;
+				foreach ($items as $item) {
+					if ($item->getChecked()==1) {
+						$nbCheked++;
+					}
+				}
+				$card->addExtraContent("22 Friends")->addIcon("user");
+				$pb=$semantic->htmlProgress($list->getId()."progressBar");
+				$pb->setPercent($nbCheked/count($items)*100);
+				$pb->setTotal(count($items));
+				$pb->setTextValues(["active"=>"","success"=>""]);
+				$card->addExtraContent($pb);
+			}
 	        
 	        array_push($containers, $card);
 	    }

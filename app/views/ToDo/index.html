@@ -3,10 +3,14 @@
     {{css('css/style_ToDoList.css') | raw}}
 {% endblock %}
 {{ _userInfo | raw }}
-<div class="ui container">
-{%for container in containers%}
-{{container|raw}}
-{%endfor%}
+
+
+<div class="mytable">
+    {%for container in containers%}
+        {{container|raw}}
+    {%endfor%}
 </div>
+
+
 <div id="response"></div>
 {{script_foot|raw}}
