@@ -1,7 +1,9 @@
 <?php
 return array(
 	"devtools-path"=>"Ubiquity",
-	"info"=>array(),
+	"info"=>array(
+			"controllers"
+			),
 	"display-cache-types"=>array(
 			"controllers",
 			"models"
