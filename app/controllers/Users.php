@@ -21,6 +21,7 @@ use Ubiquity\controllers\auth\AuthControllerCoreTrait,
  **/
 class Users extends \Ubiquity\controllers\crud\CRUDController{
 
+	// Provoque une erreur ligne 95 sans probleme 
 	use WithAuthTrait{
         initialize as _initializeAuth;
 	}
