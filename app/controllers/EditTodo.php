@@ -9,9 +9,6 @@ namespace controllers;
 class EditTodo extends ControllerBase{
 
 	public function index(){
-
-       
-
 		$this->jquery->renderView("EditTodo/index.html");
 	}
 }

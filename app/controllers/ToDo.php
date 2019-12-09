@@ -23,7 +23,7 @@ class ToDo extends ControllerBase{
 	public function index(){
 	    $semantic =$this->jquery->semantic();
 	    $slate =DAO::getAll(Slate::class);
-	    $containers =[];
+	    $containers =['<div class="classe">'];
 	    foreach ($slate as $list){
 	        $items =$list->getItems();
 			
@@ -47,17 +47,13 @@ class ToDo extends ControllerBase{
 			}
 	        
 	        array_push($containers, $card);
-	    }
-	    
-	    
-	   /* $pb=$semantic->htmlProgress("progress");
-	    $pb->setPercent($nbCheked/count($labelitems)*100);
-	    $pb->setTotal(count($labelitems));
-	    $pb->setTextValues(["active"=>"","success"=>""]);*/
-	    
+		}
+		array_push($containers, '</div>');
+		
+	    $tab=$semantic->htmlTab("tabMenu",[["Todos",$containers],["Templates","Contenu de tab2"],["Account","account"]]);
+		$tab->setPointing()->setSecondary();
 	    $this->jquery->getOnClick('tbody tr',"ToDo/checkedlist" ,"#response", ['attr'=>'data-ajax']);
-	    
-		$this->jquery->renderDefaultView(compact('containers'));
+		$this->jquery->renderDefaultView(compact('tab'));
 	}
 	
 	public function checkedlist($id) {

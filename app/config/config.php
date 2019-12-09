@@ -1,29 +1,4 @@
 <?php
-<<<<<<< HEAD
-return array(
-	"siteUrl"=>"http://127.0.0.1:8090/",
-	"database"=>array(
-			"type"=>"mysql",
-			"dbName"=>"todos",
-			"serverName"=>"127.0.0.1",
-			"port"=>8889,
-			"user"=>"root",
-			"password"=>"root",
-			"options"=>array(),
-			"cache"=>false,
-			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper"
-			),
-	"sessionName"=>"s5ddb8d31e3e80",
-	"namespaces"=>array(),
-	"templateEngine"=>"Ubiquity\\views\\engine\\Twig",
-	"templateEngineOptions"=>array(
-			"cache"=>false
-			),
-	"test"=>false,
-	"debug"=>true,
-	"logger"=>function (){return new \Ubiquity\log\libraries\UMonolog("ToDos",\Monolog\Logger::INFO);},
-	"di"=>array(
-=======
 return array(
 	"siteUrl"=>"http://127.0.0.1:8090/",
 	"database"=>array(
@@ -47,7 +22,6 @@ return array(
 	"debug"=>true,
 	"logger"=>function (){return new \Ubiquity\log\libraries\UMonolog("ToDos",\Monolog\Logger::INFO);},
 	"di"=>array(
->>>>>>> 558d4a126fca9afc4d581ccf5fcbfa9eada485a6
 			"@exec"=>array("jquery"=>function ($controller){
 						return \Ubiquity\core\Framework::diSemantic($controller);
 					})
