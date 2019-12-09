@@ -6,8 +6,8 @@ return array(
 			"dbName"=>"ToDos",
 			"serverName"=>"127.0.0.1",
 			"port"=>"",
-			"user"=>"thomas",
-			"password"=>"thomas",
+			"user"=>"root",
+			"password"=>"",
 			"options"=>array(),
 			"cache"=>false,
 			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper"
