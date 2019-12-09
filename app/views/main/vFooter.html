@@ -3,6 +3,19 @@
 {% block scripts %}
 {{ js('https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js') }}
 {{ js('https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.1/dist/semantic.min.js') }}
+
+<script>
+    $(".btn-menu").click(function(){
+        $('.ui.sidebar')
+        .sidebar({
+            context: $('.ui.container')
+        })
+        .sidebar('attach events', '.ui.container .menu .item');
+    });
+</script>
+
+
 {% endblock %}
 </body>
+
 </html>

@@ -1,0 +1,16 @@
+.button {
+    display: flex;
+}
+
+.four.wide.column {
+    border-left: 1px;
+}
+
+.ui.container.panelLeft {
+    -webkit-box-shadow: 6px 9px 22px -12px rgba(0,0,0,0.75);
+    -moz-box-shadow: 6px 9px 22px -12px rgba(0,0,0,0.75);
+    box-shadow: 6px 9px 22px -12px rgba(0,0,0,0.75);
+}
+.ui.container {
+
+}
