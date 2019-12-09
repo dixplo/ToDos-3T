@@ -39,7 +39,8 @@ class ToDo extends ControllerBase{
 				}
 				$card->addExtraContent("22 Friends")->addIcon("user");
 				$pb=$semantic->htmlProgress($list->getId()."progressBar");
-				$pb->setPercent($nbCheked/count($items)*100);
+				$nbitems = (count($items) > 0) ? $nbCheked/count($items)*100 : 0 ;
+				$pb->setPercent($nbitems);
 				$pb->setTotal(count($items));
 				$pb->setTextValues(["active"=>"","success"=>""]);
 				$card->addExtraContent($pb);
