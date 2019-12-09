@@ -1,0 +1,38 @@
+/*.horizontal-scroll-wrapper{
+  position:absolute;
+  display:block;
+  width:300px;
+  max-height:100%;
+  margin:0;
+  background:#abc;
+  transform:rotate(-90deg);
+  overflow-y:auto visible;
+  overflow-x:hidden;
+}
+.horizontal-scroll-wrapper > div{
+  display:block;
+  padding:5px;
+  background:#cab;
+  transform:rotate(90deg);
+  transform-origin: right top;
+}*/
+.ui.card{
+    height: 300px;
+    width: 300px;
+    overflow: auto;
+    margin: 15px;
+}
+.mytable {
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 15px 5%;
+}
+.ui.card > .extra.content{
+    height: 150px;
+    background-color: aqua;
+}
+.ui.container{
+    width: 100%!important;
+    margin: 0;
+}

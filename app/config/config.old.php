@@ -6,10 +6,11 @@ return array(
 			"dbName"=>"ToDos",
 			"serverName"=>"127.0.0.1",
 			"port"=>3306,
-			"user"=>"root",
-			"password"=>"",
+			"user"=>"thomas",
+			"password"=>"thomas",
 			"options"=>array(),
-			"cache"=>false
+			"cache"=>false,
+			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper"
 			),
 	"sessionName"=>"s5ddb8d31e3e80",
 	"namespaces"=>array(),
@@ -21,11 +22,9 @@ return array(
 	"debug"=>true,
 	"logger"=>function (){return new \Ubiquity\log\libraries\UMonolog("ToDos",\Monolog\Logger::INFO);},
 	"di"=>array(
-			"@exec"=>array(
-					"jquery"=>function ($controller){
+			"@exec"=>array("jquery"=>function ($controller){
 						return \Ubiquity\core\Framework::diSemantic($controller);
-					}
-					)
+					})
 			),
 	"cache"=>array(
 			"directory"=>"cache/",
