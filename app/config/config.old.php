@@ -5,7 +5,7 @@ return array(
 			"type"=>"mysql",
 			"dbName"=>"ToDos",
 			"serverName"=>"127.0.0.1",
-			"port"=>3306,
+			"port"=>"",
 			"user"=>"thomas",
 			"password"=>"thomas",
 			"options"=>array(),
