@@ -2,10 +2,14 @@
 	{{parent}}
     {{css('css/style_ToDoList.css') | raw}}
 {% endblock %}
-{{ _userInfo | raw }}
 
 
 <div class="mytable">
+    <div class="ui card">
+        <div class="image">
+            <img src="public/assets/img/steve.jpg">
+        </div>
+    </div>
     {%for container in containers%}
         {{container|raw}}
     {%endfor%}
