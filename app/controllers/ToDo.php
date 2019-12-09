@@ -5,11 +5,19 @@ namespace controllers;
 use Ubiquity\orm\DAO;
 use models\Item;
 use models\Slate;
- /**
+use models\User;
+use Ubiquity\utils\http\URequest;
+use Ubiquity\controllers\auth\WithAuthTrait;
+use Ajax\semantic\html\elements\HtmlIcon;
+/**
  * Controller ToDo
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  **/
 class ToDo extends ControllerBase{
+	use WithAuthTrait;
+     protected function getAuthController(): AtcCtrl {				//A rajouter dans la page a afficher lors de la connexion
+             return new AtcCtrl();
+     }
 
     
 	public function index(){
@@ -18,30 +26,26 @@ class ToDo extends ControllerBase{
 	    $containers =[];
 	    foreach ($slate as $list){
 	        $items =$list->getItems();
-	        $container =$semantic->htmlSegment($list->getId());
-	        $container->addLabel($list->getTitle());
+			
+			$card=$semantic->htmlCard($list->getId());
+			$card->addItemHeaderContent($list->getTitle(),count($items),$list->getDescription());
+			
+			if ($list->getTemplate()->getId()==2) {
+				$nbCheked =0;
+				foreach ($items as $item) {
+					if ($item->getChecked()==1) {
+						$nbCheked++;
+					}
+				}
+				$card->addExtraContent("22 Friends")->addIcon("user");
+				$pb=$semantic->htmlProgress($list->getId()."progressBar");
+				$pb->setPercent($nbCheked/count($items)*100);
+				$pb->setTotal(count($items));
+				$pb->setTextValues(["active"=>"","success"=>""]);
+				$card->addExtraContent($pb);
+			}
 	        
-	        $table =$semantic->dataTable("datatable", Item::class, $items);
-	        $table->addClass('very basic collapsing');
-	        $table->setFields(['checked', 'value', 'label']);
-	        $table->setCaptions(["Check","Quantity","Label"]);
-	        $table->setIdentifierFunction('getId');
-	        $table->fieldAsCheckbox('checked');
-	        $pb=$semantic->htmlProgress("progress");
-	        
-	        $nbCheked =0;
-	        foreach ($items as $mitem) {
-	            if ($mitem->getChecked()==1) {
-	                $nbCheked++;
-	            }
-	        }
-	        $pb->setPercent($nbCheked/count($items)*100);//foreach compte nb checked 
-	        $pb->setTotal(count($items));
-	        $pb->setTextValues(["active"=>"","success"=>""]);
-	        $container->addContent($table);
-	        $container->addContent($pb);
-	        
-	        array_push($containers, $container);
+	        array_push($containers, $card);
 	    }
 	    
 	    
@@ -78,4 +82,6 @@ class ToDo extends ControllerBase{
 	        echo $this->jquery->compile();
 	    }
 	}
+
+	
 }
