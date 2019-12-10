@@ -1,7 +1,6 @@
 <?php
 namespace controllers;
 
-
 use Ubiquity\orm\DAO;
 use models\Item;
 use models\Slate;
@@ -9,9 +8,12 @@ use models\User;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\controllers\auth\WithAuthTrait;
 use Ajax\semantic\html\elements\HtmlIcon;
+
+use \Ajax\php\ubiquity\JsUtils;
 /**
  * Controller ToDo
- * @property \Ajax\php\ubiquity\JsUtils $jquery
+ * @route("Home")
+ * @property JsUtils $jquery
  **/
 class ToDo extends ControllerBase{
 	use WithAuthTrait;
@@ -21,14 +23,18 @@ class ToDo extends ControllerBase{
 
     
 	public function index(){
-	    $semantic =$this->jquery->semantic();
+		$semantic =$this->jquery->semantic();
+		
 	    $slate =DAO::getAll(Slate::class);
-	    $containers =['<div class="classe">'];
+		$containers =['<div class="classe">'];
+
 	    foreach ($slate as $list){
 	        $items =$list->getItems();
 			
 			$card=$semantic->htmlCard($list->getId());
 			$card->addItemHeaderContent($list->getTitle(),count($items),$list->getDescription());
+			$card->asLink("todo/editSlate/".$list->getId());
+			$card->addClass("todo");
 			
 			if ($list->getTemplate()->getId()==2) {
 				$nbCheked =0;
@@ -37,7 +43,6 @@ class ToDo extends ControllerBase{
 						$nbCheked++;
 					}
 				}
-				$card->addExtraContent("22 Friends")->addIcon("user");
 				$pb=$semantic->htmlProgress($list->getId()."progressBar");
 				$nbitems = (count($items) > 0) ? $nbCheked/count($items)*100 : 0 ;
 				$pb->setPercent($nbitems);
@@ -49,11 +54,19 @@ class ToDo extends ControllerBase{
 	        array_push($containers, $card);
 		}
 		array_push($containers, '</div>');
+		$lv=$semantic->dataTable("lv2-3", Item::class, DAO::getAll(Item::class));
+		$lv->setFields(["label","description"]);
+		$lv->setCaptions(["Name","Description","Actions"]);
+		$lv->addEditDeleteButtons(true,["ajaxTransition"=>"random"]);
+		$lv->setUrls(["sTest/search","sTest/edit","sTest/delete"]);
+		$lv->setTargetSelector("#lv2-3-update");
 		
-	    $tab=$semantic->htmlTab("tabMenu",[["Todos",$containers],["Templates","Contenu de tab2"],["Account","account"]]);
+		
+		
+	    $tab=$semantic->htmlTab("tabMenu",[["Todos",$containers],["Templates",$lv],["Account","account"]]);
 		$tab->setPointing()->setSecondary();
-	    $this->jquery->getOnClick('tbody tr',"ToDo/checkedlist" ,"#response", ['attr'=>'data-ajax']);
-		$this->jquery->renderDefaultView(compact('tab'));
+		$this->jquery->getOnClick('tbody tr',"Home/checkedlist" ,"#response", ['attr'=>'data-ajax']);
+		$this->jquery->renderDefaultView(compact('tab', 'containers'));
 	}
 	
 	public function checkedlist($id) {
