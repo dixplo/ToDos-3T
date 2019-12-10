@@ -8,9 +8,9 @@
     $(".btn-menu").click(function(){
         $('.ui.sidebar')
         .sidebar({
-            context: $('.ui.container')
+            context: $('body')
         })
-        .sidebar('attach events', '.ui.container .menu .item');
+        .sidebar('attach events', '.container .menu .item');
     });
 </script>
 

@@ -5,15 +5,9 @@ return array(
 			"type"=>"mysql",
 			"dbName"=>"todos",
 			"serverName"=>"127.0.0.1",
-<<<<<<< HEAD
 			"port"=>8889,
 			"user"=>"root",
 			"password"=>"root",
-=======
-			"port"=>"",
-			"user"=>"thomas",
-			"password"=>"thomas",
->>>>>>> 558d4a126fca9afc4d581ccf5fcbfa9eada485a6
 			"options"=>array(),
 			"cache"=>false,
 			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper"
