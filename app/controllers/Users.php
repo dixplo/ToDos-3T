@@ -26,9 +26,7 @@ use Ubiquity\controllers\Startup;
 class Users extends \Ubiquity\controllers\crud\CRUDController{
 
 	// Provoque une erreur ligne 95 sans probleme 
-	use WithAuthTrait{
-        initialize as _initializeAuth;
-	}
+	
 	
 	
 
@@ -75,7 +73,7 @@ class Users extends \Ubiquity\controllers\crud\CRUDController{
 		$utilisateur->setEmail(URequest::post('email'));
 		$utilisateur->setPassword(URequest::post('password'));
 		if(DAO::save($utilisateur)){
-			Startup::forward("AtcCtrl/index");
+			Startup::forward("AtcCtrl");
 		}else{
 			echo 'Reessayer';
 		}
