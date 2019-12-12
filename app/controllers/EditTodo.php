@@ -43,8 +43,10 @@ class EditTodo extends ControllerBase
 			$list->setColAlignment(1,TextAlignment::RIGHT);
 
 		});
-		$this->jquery->renderDefaultView(compact("list","title"));
+		
 	}
+
+	
 
 	/*
 	public function finalize() {
