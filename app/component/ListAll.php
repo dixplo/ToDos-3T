@@ -12,6 +12,13 @@ class ListAll{
 
 	public static $semantic;
 
+	public static function home()
+	{
+		$tab = self::$semantic->htmlTab("tabMenu", [["Todos", self::listToDo()], ["Templates", ""], ["Account", "account"]]);
+		$tab->setPointing()->setSecondary();
+		return $tab;
+	}
+
     public static function listToDo()
     {
         $slate =DAO::getAll(Slate::class);
