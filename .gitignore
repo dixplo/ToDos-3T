@@ -6,3 +6,4 @@ app/cache/
 .buildpath
 .vscode/
 app/config/config.php
+app/logs/
