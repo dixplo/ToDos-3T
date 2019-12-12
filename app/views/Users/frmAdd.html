@@ -1,7 +1,23 @@
-<form action="/Users/add" method="POST">
-<input type="text" name="fname">
-<input type="text" name="name">
-<input type="text" name="email">
-<input type="passwor" name="password">
-<input type="submit">
+<form action="/Users/addUsers" method="POST">
+  <div class="ui form">
+    <div class="fields">
+      <div class="field">
+        <label>First name</label>
+        <input type="text" name="fname" placeholder="First name" />
+      </div>
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Name" />
+      </div>
+      <div class="field">
+        <label>Email</label>
+        <input type="text" name="email" placeholder="Email" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Password" />
+      </div>
+    </div>
+    <input type="submit" style="background-color: salmon; border-radius: 20%; border-color: salmon;"/>
+  </div>
 </form>

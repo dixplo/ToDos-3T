@@ -1,19 +1,22 @@
-{% extends "@framework/crud/form.html" %}
+{% extends "@framework/auth/noAccess.html" %}
 {% block _before %}
 	{{ parent() }}
 {% endblock %}
-{% block _form %}
-	{{ parent() }}
-{% endblock %}
-{% block _beforeButtons %}
+{% block _message %}
 	{{ parent() }}
 {% endblock %}
 {% block _buttons %}
 	{{ parent() }}
 {% endblock %}
+{% block _extraButtons %}
+	{{ parent() }}
+{% endblock %}
+{% block _loginButton %}
+	{{ parent() }}
+{% endblock %}
 {% block _after %}
 	{{ parent() }}
 {% endblock %}
-{% block _script_foot %}
+{% block script %}
 	{{ parent() }}
 {% endblock %}

@@ -7,9 +7,12 @@ use Ubiquity\utils\http\URequest;
 use Ubiquity\orm\DAO;
 use models\User;
 use Ubiquity\controllers\Startup;
+use Ajax\php\symfony\Jquery_;
+use \Ajax\php\ubiquity\JsUtils;
 
 /**
  * Auth Controller AtcCtrl
+ * @property JsUtils $jquery
  **/
 class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 {
@@ -21,27 +24,34 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 		if (isset($urlParts)) {
 			$this->_forward(implode("/", $urlParts));
 		} else {
-			Startup::forward("ToDo");
+			Startup::forward("Home");
 			//TODO
 			//Forwarding to the default controller/action
 		}
 	}
 
-	protected function _connect()
+	public function _connect()
 	{
 		if (URequest::isPost()) {
 			$email = URequest::post($this->_getLoginInputName());
 			$password = URequest::post($this->_getPasswordInputName());
 			$user=DAO::getOne(User::class, "email='{$email}'");
             if(isset($user) && $user->getPassword()==$password){
-                return $user;
-            }
+				echo $user;
+			
+			}
+			else{
+				echo "merde1";
+			}
 			//TODO
 			//Loading from the database the user corresponding to the parameters
 			//Checking user creditentials
 			//Returning the user
 		}
-		return;
+		else {
+			echo"merde2";
+		}
+		return "mon cul";
 	}
 
 	public function _displayInfoAsString() {
@@ -69,4 +79,8 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 	  public function _getLoginInputName() {
 		return "email";
 }
+
+
+
+
 }

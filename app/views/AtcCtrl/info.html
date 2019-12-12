@@ -1,6 +1,6 @@
 {% extends "@framework/auth/info.html" %}
 {% block _before %}
-<div class="ui tertiary inverted red segment">
+	{{ parent() }}
 {% endblock %}
 {% block _beforeConnected %}
 	{{ parent() }}
@@ -24,5 +24,5 @@
 	{{ parent() }}
 {% endblock %}
 {% block _after %}
-</div>
+	{{ parent() }}
 {% endblock %}

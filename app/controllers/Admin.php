@@ -6,8 +6,6 @@ use Ubiquity\controllers\auth\AuthController;
 
 class Admin extends UbiquityMyAdminBaseController{
     
-     protected function getAuthController(): AuthController {
-             return new PersoAuthController();
-     }
+     
 
 }
