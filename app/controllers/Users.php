@@ -11,11 +11,7 @@ use models\User;
 use Ubiquity\controllers\crud\CRUDFiles;
 use Ubiquity\controllers\auth\WithAuthTrait;
 use Ubiquity\utils\http\URequest;
-use Ubiquity\controllers\auth\AuthController;
-use Ubiquity\controllers\auth\AuthControllerCoreTrait,
-        Ubiquity\controllers\auth\AuthControllerVariablesTrait,
-        Ubiquity\controllers\auth\AuthControllerOverrideTrait,
-        Ubiquity\controllers\semantic\InsertJqueryTrait;
+
 use Ubiquity\orm\DAO;
 use Ubiquity\controllers\Startup;
 
