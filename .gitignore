@@ -5,3 +5,4 @@ app/cache/
 .project
 .buildpath
 .vscode/
+app/config/config.php

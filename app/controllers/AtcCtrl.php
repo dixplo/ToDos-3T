@@ -9,9 +9,9 @@ use Ubiquity\controllers\auth\AuthFiles;
 use Ubiquity\orm\DAO;
 use models\User;
 use Ubiquity\controllers\Startup;
-
-
-
+use Ajax\php\symfony\Jquery_;
+use \Ajax\php\ubiquity\JsUtils;
+use Ubiquity\utils\http\UResponse;
 
 /**
  * Auth Controller AtcCtrl
@@ -26,7 +26,8 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 		if (isset($urlParts)) {
 			$this->_forward(implode("/", $urlParts));
 		} else {
-			Startup::forward("Home");
+			//Startup::forward("Home");
+			UResponse::header("Location", "/Home");
 			//TODO
 			//Forwarding to the default controller/action
 		}
@@ -39,14 +40,20 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 			$password = URequest::post($this->_getPasswordInputName());
 			$user=DAO::getOne(User::class, "email='{$email}'");
             if(isset($user) && $user->getPassword()==$password){
+				echo"connected";
 				return $user;
-				
-
-            }
+			}
+			else{
+				echo "merde1";
+				return;
+			}
 			//TODO
 			//Loading from the database the user corresponding to the parameters
 			//Checking user creditentials
 			//Returning the user
+		}
+		else {
+			echo"merde2";
 		}
 		return;
 	}
