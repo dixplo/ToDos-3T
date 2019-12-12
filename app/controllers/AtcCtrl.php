@@ -4,15 +4,17 @@ namespace controllers;
 
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
+use controllers\auth\files\AtcCtrlFiles;
+use Ubiquity\controllers\auth\AuthFiles;
 use Ubiquity\orm\DAO;
 use models\User;
 use Ubiquity\controllers\Startup;
-use Ajax\php\symfony\Jquery_;
-use \Ajax\php\ubiquity\JsUtils;
+
+
+
 
 /**
  * Auth Controller AtcCtrl
- * @property JsUtils $jquery
  **/
 class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 {
@@ -37,21 +39,16 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 			$password = URequest::post($this->_getPasswordInputName());
 			$user=DAO::getOne(User::class, "email='{$email}'");
             if(isset($user) && $user->getPassword()==$password){
-				echo $user;
-			
-			}
-			else{
-				echo "merde1";
-			}
+				return $user;
+				
+
+            }
 			//TODO
 			//Loading from the database the user corresponding to the parameters
 			//Checking user creditentials
 			//Returning the user
 		}
-		else {
-			echo"merde2";
-		}
-		return "mon cul";
+		return;
 	}
 
 	public function _displayInfoAsString() {
@@ -80,7 +77,8 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 		return "email";
 }
 
-
-
+protected function getFiles(): AuthFiles{
+	return new AtcCtrlFiles();
+}
 
 }
