@@ -3,11 +3,11 @@ return array(
 	"siteUrl"=>"http://127.0.0.1:8090/",
 	"database"=>array(
 			"type"=>"mysql",
-			"dbName"=>"ToDos",
+			"dbName"=>"todos",
 			"serverName"=>"127.0.0.1",
-			"port"=>"",
+			"port"=>8889,
 			"user"=>"root",
-			"password"=>"",
+			"password"=>"root",
 			"options"=>array(),
 			"cache"=>false,
 			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper"

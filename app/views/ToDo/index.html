@@ -2,19 +2,10 @@
 	{{parent}}
     {{css('css/style_ToDoList.css') | raw}}
 {% endblock %}
-{{ _userInfo | raw }}
-
-
-
-
-<div class="mytable">
-    {%for container in containers%}
-        {{container|raw}}
-    {%endfor%}
-</div>
-
+{{tab|raw}}
  
 <div id="response"></div>
 {% block _crud%}
 {% endblock %}
+
 {{script_foot|raw}}

@@ -7,7 +7,11 @@ return array(
 			),
 	"display-cache-types"=>array(
 			"controllers",
-			"models"
+			"models",
+			"views",
+			"queries",
+			"annotations",
+			"seo"
 			),
 	"maintenance"=>array(
 			"on"=>false,
