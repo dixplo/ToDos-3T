@@ -4,6 +4,8 @@ namespace controllers;
 
 use Ubiquity\utils\http\USession;
 use Ubiquity\utils\http\URequest;
+use controllers\auth\files\AtcCtrlFiles;
+use Ubiquity\controllers\auth\AuthFiles;
 use Ubiquity\orm\DAO;
 use models\User;
 use Ubiquity\controllers\Startup;
@@ -13,7 +15,6 @@ use Ubiquity\utils\http\UResponse;
 
 /**
  * Auth Controller AtcCtrl
- * @property JsUtils $jquery
  **/
 class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 {
@@ -83,7 +84,8 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 		return "email";
 }
 
-
-
+protected function getFiles(): AuthFiles{
+	return new AtcCtrlFiles();
+}
 
 }
