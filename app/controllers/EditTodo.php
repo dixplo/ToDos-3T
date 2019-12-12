@@ -25,6 +25,7 @@ class EditTodo extends ControllerBase
 	*/
 	public function editSlate($id)
 	{
+		
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
 		$title = $slate->getTitle(); // titre de la liste
 		$items = $slate->getItems(); // toutes les items de la liste
@@ -41,8 +42,8 @@ class EditTodo extends ControllerBase
 		$list->setTargetSelector("#lv2-3-update");
 		$list->onPreCompile(function ($list) {
 			$list->setColAlignment(1,TextAlignment::RIGHT);
-
 		});
+		$this->jquery->renderDefaultView(compact('title','list'));
 		
 	}
 

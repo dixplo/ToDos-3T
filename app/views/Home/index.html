@@ -2,10 +2,7 @@
 	{{parent}}
     {{css('css/style_ToDoList.css') | raw}}
 {% endblock %}
-{{tab|raw}}
- 
-<div id="response"></div>
-{% block _crud%}
-{% endblock %}
 
+{{tab|raw}}
+{{ _userInfo | raw }}
 {{script_foot|raw}}
