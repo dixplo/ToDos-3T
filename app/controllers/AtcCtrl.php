@@ -27,14 +27,17 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 		}
 	}
 
-	protected function _connect()
+	public function _connect()
 	{
+		$this->loadView("ToDo/index.html");
 		if (URequest::isPost()) {
 			$email = URequest::post($this->_getLoginInputName());
 			$password = URequest::post($this->_getPasswordInputName());
 			$user=DAO::getOne(User::class, "email='{$email}'");
             if(isset($user) && $user->getPassword()==$password){
-                return $user;
+				return $user;
+				
+
             }
 			//TODO
 			//Loading from the database the user corresponding to the parameters
@@ -69,4 +72,10 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 	  public function _getLoginInputName() {
 		return "email";
 }
+
+public function index(){
+	$this->loadView("AtcCtrl/index.html");
+}
+
+
 }

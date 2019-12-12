@@ -2,12 +2,6 @@
 {% block _before %}
 	{{ parent() }}
 {% endblock %}
-{% block btAddNew %}
-	<a id="btAddNew" class="ui button green _new">
-		<i class="icon plus"></i>
-		Nouvelle Utilisateur
-	</a>
-{% endblock %}
 {% block _addNewCaption %}
 	{{ parent() }}
 {% endblock %}
@@ -23,9 +17,9 @@
 {% block details %}
 	{{ parent() }}
 {% endblock %}
-{% block _after %}
-	{{ parent() }}
-{% endblock %}
 {% block script %}
 	{{ parent() }}
 {% endblock %}
+{% block _after %}
+{% endblock %}
+

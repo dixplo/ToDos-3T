@@ -17,22 +17,16 @@ use Ubiquity\controllers\auth\AuthControllerCoreTrait,
         Ubiquity\controllers\auth\AuthControllerOverrideTrait,
         Ubiquity\controllers\semantic\InsertJqueryTrait;
 use Ubiquity\orm\DAO;
+use Ubiquity\controllers\Startup;
+
 
 /**
  * CRUD Controller Users
  **/
 class Users extends \Ubiquity\controllers\crud\CRUDController{
 
-	use WithAuthTrait{
-        initialize as _initializeAuth;
-	}
 	
-	public function initialize(){
-        $this->_initializeAuth();
-        if(!URequest::isAjax()){
-            $this->loadView("main/vHeader.html");
-        }
-    }
+	
 
 	public function __construct(){
 		parent::__construct();
@@ -44,9 +38,6 @@ class Users extends \Ubiquity\controllers\crud\CRUDController{
 		return 'Users';
 	}
 	
-	protected function getAdminData(): CRUDDatas{
-		return new UsersDatas($this);
-	}
 
 	protected function getModelViewer(): ModelViewer{
 		return new UsersViewer($this);
@@ -60,17 +51,17 @@ class Users extends \Ubiquity\controllers\crud\CRUDController{
 		return new UsersFiles();
 	}
 
-	protected function getAuthController(): AuthController {
-        return new AuthExt();
-	}
-	
-	/**
-	 * @get("Users/add")
-	 */
-	public function frmAdd(){
-		$this->loadView("Users/frmAdd.html");
+	protected function getAuthController(): AtcCtrl {
+        return new AtcCtrl();
 	}
 
+
+	public function form(){
+		$this->loadView("Users/frmAdd.html");
+
+	}
+
+	
 	public function addUsers(){
 		$utilisateur = new User();
 		//URequest::setPostValuesToObject("$utilisateur);
@@ -80,13 +71,9 @@ class Users extends \Ubiquity\controllers\crud\CRUDController{
 		$utilisateur->setEmail(URequest::post('email'));
 		$utilisateur->setPassword(URequest::post('password'));
 		if(DAO::save($utilisateur)){
-			echo 'Nouvel utilisateur créé';
+			Startup::forward("AtcCtrl/index");
 		}else{
 			echo 'Reessayer';
 		}
-		
-
 	}
-
-
 }

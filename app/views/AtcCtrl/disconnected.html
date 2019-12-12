@@ -1,26 +1,25 @@
-{% extends "@framework/crud/display.html" %}
-{% block _before %}
+{% extends "@framework/auth/disconnected.html" %}
+{% block _message %}
 	{{ parent() }}
 {% endblock %}
-{% block buttons %}
+{% block actions %}
 	{{ parent() }}
 {% endblock %}
-{% block btClose %}
+{% block _closeButton %}
 	{{ parent() }}
 {% endblock %}
-{% block btDelete %}
+{% block _closeCaption %}
 	{{ parent() }}
 {% endblock %}
-{% block btEdit %}
+{% block _stayButton %}
 	{{ parent() }}
 {% endblock %}
-{% block dataElement %}
+{% block _stayCaption %}
 	{{ parent() }}
 {% endblock %}
-{% block _after %}
+{% block _signinButton %}
 	{{ parent() }}
 {% endblock %}
-{% block _script_foot %}
+{% block _signinCaption %}
 	{{ parent() }}
 {% endblock %}
-

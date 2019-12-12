@@ -5,6 +5,8 @@
 {{ _userInfo | raw }}
 
 
+
+
 <div class="mytable">
     {%for container in containers%}
         {{container|raw}}
@@ -13,6 +15,6 @@
 
  
 <div id="response"></div>
-{% block _crud %}
+{% block _crud%}
 {% endblock %}
 {{script_foot|raw}}

@@ -1,7 +1,7 @@
 <?php
 namespace controllers;
 
-
+use Ajax\Semantic;
 use Ubiquity\orm\DAO;
 use models\Item;
 use models\Slate;
@@ -14,8 +14,9 @@ use Ajax\semantic\html\elements\HtmlIcon;
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  **/
 class ToDo extends ControllerBase{
+	//A rajouter dans la page a afficher lors de la connexion
 	use WithAuthTrait;
-     protected function getAuthController(): AtcCtrl {				//A rajouter dans la page a afficher lors de la connexion
+     protected function getAuthController(): AtcCtrl {				
              return new AtcCtrl();
      }
 
@@ -47,7 +48,8 @@ class ToDo extends ControllerBase{
 			}
 	        
 	        array_push($containers, $card);
-	    }
+		}
+		
 	    
 	    
 	   /* $pb=$semantic->htmlProgress("progress");
