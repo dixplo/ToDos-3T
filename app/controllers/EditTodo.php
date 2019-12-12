@@ -25,7 +25,7 @@ class EditTodo extends ControllerBase
 	*/
 	public function editSlate($id)
 	{
-		
+
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
 		$title = $slate->getTitle(); // titre de la liste
 		$items = $slate->getItems(); // toutes les items de la liste
@@ -35,8 +35,9 @@ class EditTodo extends ControllerBase
 			array_push($nameItems, $item->getLabel());
 		}
 		$list = $semantic->dataTable("lv2-3", Item::class, $items);
-		$list->setFields(["label"]);
-		$list->setCaptions(["Label", "Actions"]);
+		$list->setFields(["label", "checked"]);
+		$list->setCaptions(["Label","Checked", "Actions"]);
+		$list->fieldAsCheckbox("checked");
 		$list->addEditDeleteButtons(true, ["ajaxTransition" => "random"]);
 		$list->setUrls(["sTest/search", "sTest/edit", "sTest/delete"]);
 		$list->setTargetSelector("#lv2-3-update");
