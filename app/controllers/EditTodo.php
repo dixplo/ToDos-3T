@@ -6,6 +6,7 @@ use Ajax\php\ubiquity\JsUtils;
 use Ajax\semantic\html\base\constants\TextAlignment;
 use models\Item;
 use models\Slate;
+use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\http\UResponse;
 
@@ -26,7 +27,7 @@ class EditTodo extends ControllerBase
 	public function editSlate($id)
 	{
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
-		if(is_int($id) && !is_null($slate)) {
+		//if(is_int($id) && !is_null($slate)) {
 		
 		$title = $slate->getTitle(); // titre de la liste
 		$items = $slate->getItems(); // toutes les items de la liste
@@ -46,9 +47,11 @@ class EditTodo extends ControllerBase
 			$list->setColAlignment(1,TextAlignment::RIGHT);
 		});
 		$this->jquery->renderDefaultView(compact('title','list'));
-		} else {
-			UResponse::header("Location","/Home");
+	/*
+	} else {
+			Startup::forward("/Home");
 		}
+		*/
 	}
 
 	
