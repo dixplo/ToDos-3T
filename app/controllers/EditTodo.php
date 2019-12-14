@@ -48,7 +48,7 @@ class EditTodo extends ControllerBase
 			});
 			$this->jquery->renderDefaultView(compact('title','list'));
 			} else { // slate invalide return la page Home
-				Startup::forward("/Home");
+				Startup::forward("/Home"); //la page de return
 			}
 		
 		
