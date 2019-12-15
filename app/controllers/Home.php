@@ -47,12 +47,15 @@ class Home extends ControllerBase
 		$this->jquery->renderDefaultView(compact('tab'));
 	}
 
+
+	
+	
 	/**
-	 * checkedlist
+	 * checkedlist 
+	 * recupere les liste checked avec leur %
+	 * @param  int $id de la list (ex: 1 ==> Mes courses)
 	 *
-	 * @param  int $id
-	 *
-	 * @return void
+	 * @return void on affiche directement sur la page la liste
 	 */
 	public function checkedlist($id)
 	{
