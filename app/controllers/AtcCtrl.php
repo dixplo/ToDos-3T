@@ -41,6 +41,7 @@ class AtcCtrl extends \Ubiquity\controllers\auth\AuthController
 			$user=DAO::getOne(User::class, "email='{$email}'");
             if(isset($user) && $user->getPassword()==$password){
 				echo"connected";
+				USession::set("currentUser", $user);
 				return $user;
 			}
 			else{
