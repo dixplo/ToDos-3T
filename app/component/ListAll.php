@@ -18,6 +18,11 @@ class ListAll{
 		return $tab;
 	}
 
+    /**
+     * listToDo
+     *
+     * @return void
+     */
     public static function listToDo()
     {
 		$user=USession::get("currentUser");
@@ -59,8 +64,16 @@ class ListAll{
 	{
 		$user=USession::get("currentUser");
 		
-        $template =DAO::getAll(Template::class);
-        
+        $templateUser =DAO::getAll(Template::class, "idUser='{$user->getId()}'");
+        $templateCommon =DAO::getAll(Template::class, "idUser IS NULL");
+		$containers=self::makeList($templateUser);
+		array_push($containers, self::$semantic->htmlDivider(""));
+		array_push($containers, self::makeList($templateCommon));
+		
+        return $containers;
+	}
+	private static function makeList($template)
+	{
 		$containers =['<div class="classe">'];
 
 	    foreach ($template as $list){
@@ -74,7 +87,7 @@ class ListAll{
 	        array_push($containers, $card);
 		}
 		array_push($containers, '</div>');
-        return $containers;
+		return $containers;
 	}
 
 }

@@ -1,18 +1,18 @@
 <?php
 return array(
-	"siteUrl"=>"http://127.0.0.1:8091/",
+	"siteUrl"=>"http://127.0.0.1:8090/",
 	"database"=>array(
 			"type"=>"mysql",
 			"dbName"=>"todos",
 			"serverName"=>"127.0.0.1",
-			"port"=>8889,
+			"port"=>3306,
 			"user"=>"root",
-			"password"=>"root",
+			"password"=>"",
 			"options"=>array(),
 			"cache"=>false,
 			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper"
 			),
-	"sessionName"=>"s5df21c8e5a5b9",
+	"sessionName"=>"s5df3e70dda31e",
 	"namespaces"=>array(),
 	"templateEngine"=>"Ubiquity\\views\\engine\\Twig",
 	"templateEngineOptions"=>array(
@@ -22,8 +22,8 @@ return array(
 	"debug"=>true,
 	"logger"=>function (){return new \Ubiquity\log\libraries\UMonolog(array (
   'host' => '127.0.0.1',
-  'port' => 8091,
-  'sessionName' => 's5df21c8e5a5b9',
+  'port' => 8090,
+  'sessionName' => 's5df3e70dda31e',
 )['sessionName'],\Monolog\Logger::INFO);},
 	"di"=>array(
 			"@exec"=>array("jquery"=>function ($controller){
