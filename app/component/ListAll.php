@@ -67,7 +67,7 @@ class ListAll{
         $templateUser =DAO::getAll(Template::class, "idUser='{$user->getId()}'");
         $templateCommon =DAO::getAll(Template::class, "idUser IS NULL");
 		$containers=self::makeList($templateUser);
-		array_push($containers, self::$semantic->htmlDivider(""));
+		$containers[]=self::$semantic->htmlDivider("");
 		array_push($containers, self::makeList($templateCommon));
 		
         return $containers;
