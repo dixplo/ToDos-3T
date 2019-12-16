@@ -41,15 +41,15 @@ class Home extends ControllerBase
 	 */
 	public function index()
 	{
-		$tab =ListAll::home();		
+		$tab = ListAll::home();
 		$this->jquery->getOnClick('tbody tr', "Home/checkedlist", "#response", ['attr' => 'data-ajax']);
 		//$this->jquery->postHref('.ui.card.link.todo', "body");
 		$this->jquery->renderDefaultView(compact('tab'));
 	}
 
 
-	
-	
+
+
 	/**
 	 * checkedlist 
 	 * recupere les liste checked avec leur %

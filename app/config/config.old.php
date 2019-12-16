@@ -1,18 +1,18 @@
 <?php
 return array(
-	"siteUrl"=>"http://127.0.0.1:8090/",
+	"siteUrl"=>"http://127.0.0.1:8091/",
 	"database"=>array(
 			"type"=>"mysql",
 			"dbName"=>"todos",
 			"serverName"=>"127.0.0.1",
-			"port"=>3306,
+			"port"=>8889,
 			"user"=>"root",
-			"password"=>"",
+			"password"=>"root",
 			"options"=>array(),
 			"cache"=>false,
 			"wrapper"=>"Ubiquity\\db\\providers\\pdo\\PDOWrapper"
 			),
-	"sessionName"=>"s5ddb8d31e3e80",
+	"sessionName"=>"s5df21c8e5a5b9",
 	"namespaces"=>array(),
 	"templateEngine"=>"Ubiquity\\views\\engine\\Twig",
 	"templateEngineOptions"=>array(
@@ -20,7 +20,11 @@ return array(
 			),
 	"test"=>false,
 	"debug"=>true,
-	"logger"=>function (){return new \Ubiquity\log\libraries\UMonolog("ToDos",\Monolog\Logger::INFO);},
+	"logger"=>function (){return new \Ubiquity\log\libraries\UMonolog(array (
+  'host' => '127.0.0.1',
+  'port' => 8091,
+  'sessionName' => 's5df21c8e5a5b9',
+)['sessionName'],\Monolog\Logger::INFO);},
 	"di"=>array(
 			"@exec"=>array("jquery"=>function ($controller){
 						return \Ubiquity\core\Framework::diSemantic($controller);
