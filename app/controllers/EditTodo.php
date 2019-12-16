@@ -27,34 +27,55 @@ class EditTodo extends ControllerBase
 	public function editSlate($id)
 	{
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
-		if(!is_null($slate)) { // Slate valide ( on affiche la slate)
-		
+		if (!is_null($slate)) { // Slate valide ( on affiche la slate)
+
 			$title = $slate->getTitle(); // titre de la liste
 			$items = $slate->getItems(); // toutes les items de la liste
 			$semantic = $this->jquery->semantic();
-			$nameItems = []; 
+			$nameItems = [];
 			foreach ($items as $item) {
 				array_push($nameItems, $item->getLabel());
 			}
 			$list = $semantic->dataTable("lv2-3", Item::class, $items);
 			$list->setFields(["label", "checked"]);
-			$list->setCaptions(["Label","Checked", "Actions"]);
+			$list->setCaptions(["Label", "Checked", "Actions"]);
 			$list->fieldAsCheckbox("checked");
 			$list->addEditDeleteButtons(true, ["ajaxTransition" => "random"]);
-			$list->setUrls(["sTest/search", "sTest/edit", "sTest/delete"]);
+			$list->setUrls(["sTest/search", "sTest/edit", "sTest/delete"]); // modifier
 			$list->setTargetSelector("#lv2-3-update");
 			$list->onPreCompile(function ($list) {
-				$list->setColAlignment(1,TextAlignment::RIGHT);
+				$list->setColAlignment(1, TextAlignment::RIGHT);
+
+				// button addItem
+				$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-ajax']);
 			});
-			$this->jquery->renderDefaultView(compact('title','list'));
-			} else { // slate invalide return la page Home
-				Startup::forward("/Home"); //la page de return
-			}
-		
+			$this->jquery->renderDefaultView(compact('title', 'list'));
+
+		} else { // slate invalide return la page Home
+			Startup::forward("/Home"); //la page de return
+		}
 		
 	}
 
-	
+	public function ajoutItem()
+	{
+		$slate=DAO::getOne("models\Slate",1);
+		$id = $slate->getId();
+		echo $slate->getId();
+		/*
+		$orga = DAO::getOne(Organization::class, 1);
+		$user = new User();
+		$user->setFirstname('DOE');
+		$user->setLastname('John');
+		$user->setEmail('doe@bar.net');
+		$user->setOrganization($orga);
+		if (DAO::save($user)) {
+			echo $user . ' added in database in ' . $orga;
+		}
+		*/
+	}
+
+
 
 	/*
 	public function finalize() {
