@@ -966,3 +966,8 @@ null
 =======
 >>>>>>> cae4daa9a7896de31e4782db9be490bba99ca168
 >>>>>>> 5e8783719b0e2aceb1bff94f54981ab104d17f91
+{"message":"Route found for /Home/(index/)? : controllers\\Home/index","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:24:21.713610","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:24:31.373452","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:29:24.281957","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:32:23.690043","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:34:55.974410","timezone_type":3,"timezone":"UTC"},"extra":[]}
