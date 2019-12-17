@@ -951,7 +951,21 @@ null
 {"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 14:18:43.258302","timezone_type":3,"timezone":"Europe/Berlin"},"extra":[]}
 =======
 >>>>>>> 4dd85a85c8bae3216161cf0a42b76f5a94c2589b
+<<<<<<< HEAD
+{"message":"Route found for /_default/ : controllers\\IndexController/index","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:17.491191","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /Home/(index/)? : controllers\\Home/index","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:24.079892","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /Home/(index/)? : controllers\\Home/index","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:24.367317","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:26.624023","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:28.371879","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:28.992440","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:35.203919","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:39.372239","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /Home/(index/)? : controllers\\Home/index","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:54.002668","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:14:59.437669","timezone_type":3,"timezone":"UTC"},"extra":[]}
+{"message":"Route found for /Home/(index/)? : controllers\\Home/index","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 13:16:40.170273","timezone_type":3,"timezone":"UTC"},"extra":[]}
+=======
 >>>>>>> cae4daa9a7896de31e4782db9be490bba99ca168
+<<<<<<< HEAD
 {"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 14:25:34.396825","timezone_type":3,"timezone":"Europe/Berlin"},"extra":[]}
 null
 {"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 14:25:36.470168","timezone_type":3,"timezone":"Europe/Berlin"},"extra":[]}
@@ -993,3 +1007,6 @@ null
 {"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 14:33:37.333184","timezone_type":3,"timezone":"Europe/Berlin"},"extra":[]}
 {"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 14:34:04.433351","timezone_type":3,"timezone":"Europe/Berlin"},"extra":[]}
 {"message":"Route found for /todo/editSlate/(.+?)/ : controllers\\EditTodo/editSlate","context":{"context":"Router","part":"getRouteUrlParts","extra":null},"level":200,"level_name":"INFO","channel":"s5df3e70dda31e","datetime":{"date":"2019-12-17 14:34:15.295401","timezone_type":3,"timezone":"Europe/Berlin"},"extra":[]}
+=======
+>>>>>>> 5e8783719b0e2aceb1bff94f54981ab104d17f91
+>>>>>>> eaae738fbd422797122acbc2acfab0212d7ead59
