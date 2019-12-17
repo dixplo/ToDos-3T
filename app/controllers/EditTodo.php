@@ -8,6 +8,7 @@ use models\Item;
 use models\Slate;
 use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
+use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
 
 /**
@@ -20,7 +21,8 @@ class EditTodo extends ControllerBase
 
 
 	public function index()
-	{ }
+	{
+	}
 	/*
 	* @post("editSlate/{id}");
 	*/
@@ -37,13 +39,13 @@ class EditTodo extends ControllerBase
 				array_push($nameItems, $item->getLabel());
 			}
 			$list = $semantic->dataTable("lv2-3", Item::class, $items);
-			$fields =["label"];
-			$captions =["Label"];
-			if ($slate->getTemplate()->getId()==2) {
-				$fields[] ="checked";
-				$captions[] ="Checked";
+			$fields = ["label"];
+			$captions = ["Label"];
+			if ($slate->getTemplate()->getId() == 2) {
+				$fields[] = "checked";
+				$captions[] = "Checked";
 			}
-			$captions[]="Actions";
+			$captions[] = "Actions";
 			$list->setFields($fields);
 			$list->setCaptions($captions);
 			$list->fieldAsCheckbox("checked");
@@ -56,12 +58,10 @@ class EditTodo extends ControllerBase
 				// button addItem
 				$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-ajax']);
 			});
-			$this->jquery->renderDefaultView(compact('slate','list'));
-			} else { // slate invalide return la page Home
-				UResponse::header("Location", "/Home");
-			}
-		
-		
+			$this->jquery->renderDefaultView(compact('slate', 'list'));
+		} else { // slate invalide return la page Home
+			UResponse::header("Location", "/Home");
+		}
 	}
 	private function setColumn($list, $fields, $captions)
 	{
@@ -69,9 +69,9 @@ class EditTodo extends ControllerBase
 
 	public function ajoutItem()
 	{
-		$slate=DAO::getOne("models\Slate",1);
+		$slate = DAO::getOne(Slate::class, 1);
 		$id = $slate->getId();
-		echo $slate->getId();
+		echo $id;
 		/*
 		$orga = DAO::getOne(Organization::class, 1);
 		$user = new User();
@@ -83,6 +83,20 @@ class EditTodo extends ControllerBase
 			echo $user . ' added in database in ' . $orga;
 		}
 		*/
+	}
+
+	/**
+	 * update user
+	 *
+	 * @return void
+	 */
+	public function update()
+	{
+		if (URequest::isPost()) {
+			$user = DAO::getOne("models\User", URequest::post("id"));
+			URequest::setPostValuesToObject($user);
+			DAO::update($user);
+		}
 	}
 
 
