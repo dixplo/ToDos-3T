@@ -38,10 +38,10 @@ class ListAll
 			$card->addItemHeaderContent($list->getTitle(), count($items), $list->getDescription());
 			$card->asLink("todo/editSlate/" . $list->getId());
 			$card->addClass("todo");
-			#$card->setTagName('a');
-
-			if ($list->getTemplate()->getId() == 2) {
-				$nbCheked = 0;
+			$card->setTagName('a');
+			
+			if ($list->getTemplate()->getId()==2) {
+				$nbCheked =0;
 				foreach ($items as $item) {
 					if ($item->getChecked() == 1) {
 						$nbCheked++;
@@ -84,9 +84,9 @@ class ListAll
 			$card->addItemHeaderContent($list->getName(), "", $list->getDescription());
 			//$card->asLink("todo/editSlate/".$list->getId());
 			$card->addClass("template");
-			//$card->setTagName('a');
-
-			array_push($containers, $card);
+			$card->setTagName('a');
+				        
+	        array_push($containers, $card);
 		}
 		array_push($containers, '</div>');
 		return $containers;
