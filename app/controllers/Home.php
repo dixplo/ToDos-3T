@@ -42,43 +42,7 @@ class Home extends ControllerBase
 	public function index()
 	{
 		$tab = ListAll::home();
-		$this->jquery->getOnClick('#monButton', "Home/checkedlist", "#response", ['attr' => 'data-ajax']);
 		//$this->jquery->postHref('.ui.card.link.todo');
 		$this->jquery->renderDefaultView(compact('tab'));
-	}
-
-
-
-
-	/**
-	 * checkedlist 
-	 * recupere les liste checked avec leur %
-	 * @param  int $id de la list (ex: 1 ==> Mes courses)
-	 *
-	 * @return void on affiche directement sur la page la liste
-	 */
-	public function checkedlist($id)
-	{
-		$item = DAO::getById(Item::class, $id, ['slate.items']);
-		if (isset($item)) {
-			$newck = !$item->getChecked();
-			$item->setChecked($newck);
-			DAO::save($item);
-			$items = $item->getSlate()->getItems();
-
-			$nbchecked = 0;
-			foreach ($items as $mitem) {
-				if ($mitem->getChecked() == 1) {
-					$nbchecked++;
-				}
-			}
-			$this->jquery->semantic()->toast('body', ['message' => 'Change saved']);
-			$newck ? $nbchecked++ : $nbchecked--;
-			$ck = $newck ? 'checked' : 'unchecked';
-			$this->jquery->execAtLast("$(\"tr[data-ajax='{$id}'] .ui.checkbox\").checkbox('set {$ck}');");
-			$percent = $nbchecked / count($items) * 100;
-			$this->jquery->execAtLast("$(\".ui.progress\").progress({percent: {$percent}});");
-			echo $this->jquery->compile();
-		}
 	}
 }

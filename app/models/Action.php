@@ -76,7 +76,7 @@ class Action{
 	}
 
 	 public function __toString(){
-		return $this->global;
+		return $this->name;
 	}
 
 }

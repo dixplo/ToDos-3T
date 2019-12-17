@@ -37,7 +37,7 @@ class ListAll
 			$card = self::$semantic->htmlCard($list->getId());
 			$card->addItemHeaderContent($list->getTitle(), count($items), $list->getDescription());
 			$card->asLink("todo/editSlate/" . $list->getId());
-			$card->addClass("todo");
+			$card->addClass("perso todo");
 			$card->setTagName('a');
 			
 			if ($list->getTemplate()->getId()==2) {
@@ -83,7 +83,7 @@ class ListAll
 			$card = self::$semantic->htmlCard($list->getId());
 			$card->addItemHeaderContent($list->getName(), "", $list->getDescription());
 			//$card->asLink("todo/editSlate/".$list->getId());
-			$card->addClass("template");
+			$card->addClass("perso template");
 			$card->setTagName('a');
 				        
 	        array_push($containers, $card);
@@ -100,6 +100,6 @@ class ListAll
 		$card->addImage("https://semantic-ui.com/images/avatar2/large/kristy.png");
 		$card->addItemHeaderContent("Kristy", "Joined in 2013", "Kristy is an art director living in New York.");
 		$card->addExtraContent("22 Friends")->addIcon("user");
-		echo $card;
+		return $card;
 	}
 }
