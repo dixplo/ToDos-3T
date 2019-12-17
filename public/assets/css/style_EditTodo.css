@@ -1,24 +1,15 @@
-.container {}
-
-
-.button {
-    display: flex;
+.ui.vertical.menu{
+    margin: 0 auto;
+    height: 100vh;
+    position: absolute;
+    z-index: 1;
 }
-
-.four.wide.column {
-    border-left: 1px;
+.ui.container.slate{
+    box-shadow: 0px 0px 20px 5px rgba(214,214,214,1);
+    height: 100vh;
+    padding: 16px;
+    overflow: auto;
 }
-
-.ui.container.panelLeft {
-    -webkit-box-shadow: 6px 9px 22px -12px rgba(0,0,0,0.75);
-    -moz-box-shadow: 6px 9px 22px -12px rgba(0,0,0,0.75);
-    box-shadow: 6px 9px 22px -12px rgba(0,0,0,0.75);
+.save{
+    margin-bottom: 0;
 }
-.save.ui.buttons {
-    padding-left: 85%;
-    padding-top: 5%;
-}
-.item {
-    padding-top: 0% !important;
-}
-

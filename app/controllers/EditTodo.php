@@ -22,12 +22,12 @@ class EditTodo extends ControllerBase
 	public function index()
 	{ }
 	/*
-	* @route("editSlate/{id}");
+	* @post("editSlate/{id}");
 	*/
 	public function editSlate($id)
 	{
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
-		if (!is_null($slate)) { // Slate valide ( on affiche la slate)
+		if (!is_null($slate) && is_int(intval($id))) { // Slate valide ( on affiche la slate)
 
 			$title = $slate->getTitle(); // titre de la liste
 			$items = $slate->getItems(); // toutes les items de la liste
@@ -37,8 +37,15 @@ class EditTodo extends ControllerBase
 				array_push($nameItems, $item->getLabel());
 			}
 			$list = $semantic->dataTable("lv2-3", Item::class, $items);
-			$list->setFields(["label", "checked"]);
-			$list->setCaptions(["Label", "Checked", "Actions"]);
+			$fields =["label"];
+			$captions =["Label"];
+			if ($slate->getTemplate()->getId()==2) {
+				$fields[] ="checked";
+				$captions[] ="Checked";
+			}
+			$captions[]="Actions";
+			$list->setFields($fields);
+			$list->setCaptions($captions);
 			$list->fieldAsCheckbox("checked");
 			$list->addEditDeleteButtons(true, ["ajaxTransition" => "random"]);
 			$list->setUrls(["sTest/search", "sTest/edit", "sTest/delete"]); // modifier
@@ -49,12 +56,15 @@ class EditTodo extends ControllerBase
 				// button addItem
 				$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-ajax']);
 			});
-			$this->jquery->renderDefaultView(compact('title','list'));
+			$this->jquery->renderDefaultView(compact('slate','list'));
 			} else { // slate invalide return la page Home
 				UResponse::header("Location", "/Home");
 			}
 		
 		
+	}
+	private function setColumn($list, $fields, $captions)
+	{
 	}
 
 	public function ajoutItem()

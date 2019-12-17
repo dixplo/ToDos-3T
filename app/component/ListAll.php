@@ -36,7 +36,7 @@ class ListAll{
 			$card->addItemHeaderContent($list->getTitle(),count($items),$list->getDescription());
 			$card->asLink("todo/editSlate/".$list->getId());
 			$card->addClass("todo");
-			$card->setTagName('a');
+			#$card->setTagName('a');
 			
 			if ($list->getTemplate()->getId()==2) {
 				$nbCheked =0;
@@ -82,7 +82,7 @@ class ListAll{
 			$card->addItemHeaderContent($list->getName(),"",$list->getDescription());
 			//$card->asLink("todo/editSlate/".$list->getId());
 			$card->addClass("template");
-			$card->setTagName('a');
+			//$card->setTagName('a');
 				        
 	        array_push($containers, $card);
 		}
