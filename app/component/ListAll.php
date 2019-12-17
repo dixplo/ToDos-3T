@@ -13,7 +13,7 @@ class ListAll{
 
 	public static function home()
 	{
-		$tab = self::$semantic->htmlTab("tabMenu", [["Todos", self::listToDo()], ["Templates", self::listTemplate()], ["Account", "account"]]);
+		$tab = self::$semantic->htmlTab("tabMenu", [["Todos", self::listToDo()], ["Templates", self::listTemplate()], ["Account", self::account()]]);
 		$tab->setPointing()->setSecondary();
 		return $tab;
 	}
@@ -89,5 +89,12 @@ class ListAll{
 		array_push($containers, '</div>');
 		return $containers;
 	}
+
+	// Fonction account 
+	public static function account() {
+		$user=USession::get("currentUser");
+
+	}
+
 
 }
