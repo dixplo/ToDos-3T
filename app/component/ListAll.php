@@ -102,13 +102,9 @@ class ListAll
 		$card->addImage("https://semantic-ui.com/images/avatar2/large/kristy.png");
 		$card->addItemHeaderContent("Kristy", "Joined in 2013", "Kristy is an art director living in New York.");
 		$card->addExtraContent("22 Friends")->addIcon("user");
-<<<<<<< HEAD
 		
 		$containers[]=$card;
 		array_push($containers, '</div>');
 		return $containers;
-=======
-		return $card;
->>>>>>> e55da5a9a256f13b4ce5672aa2109698fc1833cb
 	}
 }
