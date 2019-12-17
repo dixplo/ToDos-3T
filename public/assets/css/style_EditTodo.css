@@ -1,7 +1,6 @@
 .ui.vertical.menu{
-    margin: 0 auto;
+    margin: 0 0 auto 0;
     height: 100vh;
-    position: absolute;
     z-index: 1;
 }
 .ui.container.slate{
@@ -9,6 +8,9 @@
     height: 100vh;
     padding: 16px;
     overflow: auto;
+}
+.block{
+    display: flex;
 }
 .save{
     margin-bottom: 0;
