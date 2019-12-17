@@ -95,11 +95,16 @@ class ListAll
 	// Fonction account 
 	public static function account()
 	{
+		$containers = ['<div>'];
+
 		$user = USession::get("currentUser");
 		$card = self::$semantic->htmlCard("card1");
 		$card->addImage("https://semantic-ui.com/images/avatar2/large/kristy.png");
 		$card->addItemHeaderContent("Kristy", "Joined in 2013", "Kristy is an art director living in New York.");
 		$card->addExtraContent("22 Friends")->addIcon("user");
-		echo $card;
+		
+		$containers[]=$card;
+		array_push($containers, '</div>');
+		return $containers;
 	}
 }
