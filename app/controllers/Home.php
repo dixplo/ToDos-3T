@@ -43,7 +43,7 @@ class Home extends ControllerBase
 	{
 		$tab = ListAll::home();
 		$this->jquery->getOnClick('#monButton', "Home/checkedlist", "#response", ['attr' => 'data-ajax']);
-		//$this->jquery->postHref('.ui.card.link.todo', "");
+		$this->jquery->postHref('.ui.card.link.todo');
 		$this->jquery->renderDefaultView(compact('tab'));
 	}
 
