@@ -63,8 +63,8 @@ class EditTodo extends ControllerBase
 				// button addItem
 				$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
 			});
-			
-			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/","",['attr'=>'data-value']);
+			USession::set("dataTable", $list);
+			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/","#response",['attr'=>'data-value']);
 			$this->jquery->renderDefaultView(compact('slate', 'list'));
 		} else { // slate invalide return la page Home
 			UResponse::header("Location", "/Home");
@@ -78,7 +78,6 @@ class EditTodo extends ControllerBase
 	 */
 	public function checkedlist($id)
 	{
-		echo $id;
 		$item = DAO::getById(Item::class, $id, ['slate.items']);
 		if (isset($item)) {
 			$newck = !$item->getChecked();
@@ -95,8 +94,7 @@ class EditTodo extends ControllerBase
 			$this->jquery->semantic()->toast('body', ['message' => 'Change saved']);
 			$newck ? $nbchecked++ : $nbchecked--;
 			$ck = $newck ? 'checked' : 'unchecked';
-			echo $ck;
-			$this->jquery->execAtLast("$(\"tr[data-ajax=\"{$id}\"] .ui.checkbox\").checkbox('set {$ck}');");
+			$this->jquery->execAtLast("$('tr[data-ajax=\"{$id}\"] .ui.checkbox').checkbox('set {$ck}');");
 			/*$percent = $nbchecked / count($items) * 100;
 			$this->jquery->execAtLast("$(\".ui.progress\").progress({percent: {$percent}});");*/
 			echo $this->jquery->compile();
