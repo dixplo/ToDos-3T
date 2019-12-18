@@ -63,7 +63,6 @@ class EditTodo extends ControllerBase
 				// button addItem
 				$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
 			});
-			USession::set("dataTable", $list);
 			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/","#response",['attr'=>'data-value']);
 			$this->jquery->renderDefaultView(compact('slate', 'list'));
 		} else { // slate invalide return la page Home
