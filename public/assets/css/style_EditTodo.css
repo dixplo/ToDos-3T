@@ -12,6 +12,11 @@
 .block{
     display: flex;
 }
-.save{
+#progressBar{
+    width: 100%;
     margin-bottom: 0;
+}
+table{
+    max-height: 20vh!important;
+    overflow: auto;
 }
