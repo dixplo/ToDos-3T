@@ -2,6 +2,7 @@
 
 namespace component;
 
+use Ajax\php\ubiquity\JsUtils;
 use Ajax\semantic\html\base\constants\Color;
 use Ajax\semantic\html\base\constants\TextAlignment;
 use models\Item;
@@ -9,6 +10,7 @@ use models\Slate;
 use models\Template;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\http\USession;
+use Ajax\semantic\widgets\datatable\PositionInTable;
 
 class EditSlate
 {
@@ -17,17 +19,16 @@ class EditSlate
 
     public static function home($slate)
     {
-        $containers=['salut'];
-        #array_push($containers,self::menu($slate));
-        #array_push($containers,self::dataTable($slate));
+        $containers=[];
+        array_push($containers,self::menu($slate));
+        array_push($containers,self::dataTable($slate));
         return $containers;
     }
 
     private static function menu($slate)
     {
-        $user = USession::get("currentUser");
         $menu = self::$semantic->htmlMenu("menu8");
-        $menu->addMenuAsItem(["Enterprise", "Consumer"], "Products");
+        $menu->addMenuAsItem(["Enterprise", "Consumer"], "<h1>".$slate->getTitle()."</h1>");
         $menu->addMenuAsItem(["Rails", "Python", "PHP"], "CMS solutions");
         $menu->setVertical();
         $containers = ['<div>'];
@@ -36,6 +37,7 @@ class EditSlate
     }
     private static function dataTable($slate)
     {
+        $containers=['<div class="ui container slate"><div class="liste">'];
         $items = $slate->getItems(); // toutes les items de la liste
         $nameItems = [];
         $nbchecked = 0;
@@ -67,8 +69,11 @@ class EditSlate
         $list->setTargetSelector("#dataTableSlate-update");
         $list->setIdentifierFunction('getId');
         $list->setEdition(true);
+        $list->setToolbarPosition(PositionInTable::AFTERTABLE);
         $list->onPreCompile(function ($list) {
             $list->setColAlignment(1, TextAlignment::RIGHT);
         });
+        array_push($containers, $list."</div></div>");
+        return $containers;
     }
 }

@@ -4,6 +4,7 @@ namespace controllers;
 
 use Ajax\php\ubiquity\JsUtils;
 use Ajax\semantic\html\base\constants\TextAlignment;
+use component\EditSlate;
 use models\Item;
 use models\Slate;
 use Ubiquity\controllers\Startup;
@@ -24,55 +25,25 @@ class EditTodo extends ControllerBase
 	public function index()
 	{
 	}
+	public function initialize()
+	{
+		parent::initialize();
+		EditSlate::$semantic = $this->jquery->semantic();
+	}
 	/*
 	* @route("editSlate/{id}");
 	*/
 	public function editSlate($id)
 	{
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
+        $user = USession::get("currentUser");
 
-		if (!is_null($slate)) { // Slate valide ( on affiche la slate)
+		if (!is_null($slate) && $slate->getUser()->getId()==$user->getId()) { // Slate valide ( on affiche la slate)
 
-			$title = $slate->getTitle(); // titre de la liste
-			$items = $slate->getItems(); // toutes les items de la liste
-			$semantic = $this->jquery->semantic();
-			$nameItems = [];
-			$nbchecked = 0;
-			foreach ($items as $item) {
-				if ($item->getChecked() == 1) {
-					$nbchecked++;
-				}
-				array_push($nameItems, $item->getLabel());
-			}
-			$list = $semantic->dataTable("dataTableSlate", Item::class, $items);
-			$fields = ["label"];
-			$captions = ["Label"];
-			if ($slate->getTemplate()->getId() == 2) { //changer par les proprieter
-				$fields[] = "checked";
-				$captions[] = "Checked";
-				$pb = $semantic->htmlProgress("progressBar");
-			$nbitems = (count($items) > 0) ? $nbchecked / count($items) * 100 : 0;
-			$pb->setPercent($nbitems);
-			$pb->setIndicating();
-			$pb->setTotal(count($items));
-			$list->addItemInToolbar($pb);
-			}
-			$captions[] = "Actions";
-			$list->setFields($fields);
-			$list->setCaptions($captions);
-			$list->fieldAsCheckbox("checked")->setIdentifierFunction('getId');
-			$list->addEditDeleteButtons(true, ["ajaxTransition" => "random"]);
-			$list->setUrls(["sTest/search", "sTest/edit", "sTest/delete"]); // modifier
-			$list->setTargetSelector("#dataTableSlate-update");
-			$list->setIdentifierFunction('getId');
-			$list->setEdition(true);
-			$list->onPreCompile(function ($list) {
-				$list->setColAlignment(1, TextAlignment::RIGHT);
-				// button addItem
-				$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
-			});
-			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", ['attr' => 'data-value']);
-			$this->jquery->renderDefaultView(compact('slate', 'list'));
+			$containerss =EditSlate::home($slate);
+			$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
+			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", ['attr' => 'data-value','hasLoader'=>false]);
+			$this->jquery->renderDefaultView(compact('containerss'));
 		} else { // slate invalide return la page Home
 			UResponse::header("Location", "/Home");
 		}
