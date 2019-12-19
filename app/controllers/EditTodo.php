@@ -5,6 +5,7 @@ namespace controllers;
 use Ajax\php\ubiquity\JsUtils;
 use Ajax\semantic\html\base\constants\TextAlignment;
 use component\EditSlate;
+use DateTime;
 use models\Item;
 use models\Slate;
 use Ubiquity\controllers\Startup;
@@ -36,13 +37,21 @@ class EditTodo extends ControllerBase
 	public function editSlate($id)
 	{
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
-        $user = USession::get("currentUser");
+		$user = USession::get("currentUser");
 
-		if (!is_null($slate) && $slate->getUser()->getId()==$user->getId()) { // Slate valide ( on affiche la slate)
+		if (!is_null($slate) && in_array($user->getEmail(), $slate->getUsers())) { // Slate valide ( on affiche la slate)
+			USession::set("idSlate", $id);
 
-			$containerss =EditSlate::home($slate);
-			$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
-			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", ['attr' => 'data-value','hasLoader'=>false]);
+			$form = $this->jquery->semantic()->htmlForm("frm1");
+			$form->addErrorMessage();
+			$form->addInput("itemLabel", "Label", "text", "", "ToDo...")->addRule("empty");
+			$form->addButton("btSubmit1", "Submit")->asSubmit();
+			$form->submitOn("click", "btSubmit1", "todo/addItem", "#response", ['hasLoader' => false]);
+			#echo $form;
+			$containerss = EditSlate::home($slate);
+			//$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
+			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", ['attr' => 'data-value', 'hasLoader' => false]);
+			//$this->jquery->getOnClick("#div-inputAddItem button", "todo/addItem", ".liste", ['attr' => 'class', 'hasLoader' => false]);
 			$this->jquery->renderDefaultView(compact('containerss'));
 		} else { // slate invalide return la page Home
 			UResponse::header("Location", "/Home");
@@ -60,6 +69,8 @@ class EditTodo extends ControllerBase
 		if (isset($item)) {
 			$newck = !$item->getChecked();
 			$item->setChecked($newck);
+			$date = date('Y-m-d H:i:s');
+			$item->setDateM($date);
 			DAO::save($item);
 			$items = $item->getSlate()->getItems();
 
@@ -79,22 +90,31 @@ class EditTodo extends ControllerBase
 		}
 	}
 
-	public function ajoutItem()
+	public function addItem()
 	{
-		$slate = DAO::getOne(Slate::class, 1);
-		$id = $slate->getId();
-		echo $id;
-		/*
-		$orga = DAO::getOne(Organization::class, 1);
-		$user = new User();
-		$user->setFirstname('DOE');
-		$user->setLastname('John');
-		$user->setEmail('doe@bar.net');
-		$user->setOrganization($orga);
-		if (DAO::save($user)) {
-			echo $user . ' added in database in ' . $orga;
-		}
-		*/
+		$label = URequest::post("itemLabel", "faut");
+		$idSlate = USession::get("idSlate");
+		$item = new Item();
+		$item->setLabel($label);
+		$item->setSlate(DAO::getById(Slate::class, $idSlate));
+
+		$date = date('Y-m-d H:i:s');
+		$item->setDateC($date);
+		$item->setDateM($date);
+
+		DAO::save($item);
+		$this->jquery->execAtLast("$('#frm1').form('clear')");
+		$this->jquery->getDeferred('todo/refreshItems','#dataTableSlate tbody',['jqueryDone'=>'replaceWith', 'hasLoader'=>false]);
+		echo $this->jquery->compile();
+	}
+	public function refreshItems(){
+
+		$items =DAO::getById(Slate::class, USession::get("idSlate"))->getItems();
+		$dt=$this->jquery->semantic()->dataTable('dataTableSlate', $items);
+		//creation normale du dataTable
+		$dt->refresh();
+		$this->jquery->renderDefaultView();
+		echo $this->jquery->compile();
 	}
 
 	/**
@@ -109,6 +129,10 @@ class EditTodo extends ControllerBase
 			URequest::setPostValuesToObject($user);
 			DAO::update($user);
 		}
+	}
+
+	public function delete($id){
+		DAO::delete(Item::class, $id);
 	}
 
 	/*

@@ -19,25 +19,36 @@ class EditSlate
 
     public static function home($slate)
     {
-        $containers=[];
-        array_push($containers,self::menu($slate));
-        array_push($containers,self::dataTable($slate));
+        $containers = [];
+        array_push($containers, self::menu($slate));
+        array_push($containers, self::dataTable($slate));
         return $containers;
     }
 
     private static function menu($slate)
     {
-        $menu = self::$semantic->htmlMenu("menu8");
-        $menu->addMenuAsItem(["Enterprise", "Consumer"], "<h1>".$slate->getTitle()."</h1>");
-        $menu->addMenuAsItem(["Rails", "Python", "PHP"], "CMS solutions");
+        $menu = self::$semantic->htmlMenu("vertcalMenu");
+        $menu->addMenuAsItem([$slate->getUser()->getEmail()], "<h1>" . $slate->getTitle() . "</h1>");
+        $usersEmail = [];
+        foreach ($slate->getUsers() as $user) {
+            $usersEmail[] = $user->getEmail();
+        }
+        $menu->addMenuAsItem($usersEmail, "Users list");
         $menu->setVertical();
         $containers = ['<div>'];
-        array_push($containers, $menu.'</div>');
+        array_push($containers, $menu . '</div>');
         return $containers;
     }
-    private static function dataTable($slate)
+    public static function dataTable($slate)
     {
-        $containers=['<div class="ui container slate"><div class="liste">'];
+        $containers = ['<div class="ui container slate"><div class="liste">'];
+        
+			$form = self::$semantic->htmlForm("frm1");
+			$form->addErrorMessage();
+			$form->addInput("itemLabel", "Label", "text", "", "ToDo...")->addRule("empty");
+			$form->addButton("btSubmit1", "Submit")->asSubmit();
+			$form->submitOn("click", "btSubmit1", "todo/addItem", "#response", ['hasLoader' => false]);
+        $containers[] = $form;
         $items = $slate->getItems(); // toutes les items de la liste
         $nameItems = [];
         $nbchecked = 0;
@@ -50,6 +61,7 @@ class EditSlate
         $list = self::$semantic->dataTable("dataTableSlate", Item::class, $items);
         $fields = ["label"];
         $captions = ["Label"];
+
         if ($slate->getTemplate()->getId() == 2) { //changer par les proprieter
             $fields[] = "checked";
             $captions[] = "Checked";
@@ -65,15 +77,15 @@ class EditSlate
         $list->setCaptions($captions);
         $list->fieldAsCheckbox("checked")->setIdentifierFunction('getId');
         $list->addEditDeleteButtons(true, ["ajaxTransition" => "random"]);
-        $list->setUrls(["sTest/search", "sTest/edit", "sTest/delete"]); // modifier
+        $list->setUrls(["sTest/search", "sTest/edit", "todo/delete"]); // modifier
         $list->setTargetSelector("#dataTableSlate-update");
         $list->setIdentifierFunction('getId');
         $list->setEdition(true);
-        $list->setToolbarPosition(PositionInTable::AFTERTABLE);
+        $list->setToolbarPosition(PositionInTable::BEFORETABLE);
         $list->onPreCompile(function ($list) {
             $list->setColAlignment(1, TextAlignment::RIGHT);
         });
-        array_push($containers, $list."</div></div>");
+        array_push($containers, $list . "</div></div>");
         return $containers;
     }
 }
