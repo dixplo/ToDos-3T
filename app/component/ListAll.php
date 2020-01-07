@@ -7,6 +7,8 @@ use models\Slate;
 use models\Template;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\http\USession;
+use Ajax\semantic\html\collections\form\HtmlFormInput;
+use Ajax\semantic\html\elements\HtmlList;
 
 class ListAll
 {
@@ -39,9 +41,9 @@ class ListAll
 			$card->asLink("todo/editSlate/" . $list->getId());
 			$card->addClass("perso todo");
 			$card->setTagName('a');
-			
-			if ($list->getTemplate()->getId()==2) {
-				$nbCheked =0;
+
+			if ($list->getTemplate()->getId() == 2) {
+				$nbCheked = 0;
 				foreach ($items as $item) {
 					if ($item->getChecked() == 1) {
 						$nbCheked++;
@@ -85,8 +87,8 @@ class ListAll
 			//$card->asLink("todo/editSlate/".$list->getId());
 			$card->addClass("perso template");
 			$card->setTagName('a');
-				        
-	        array_push($containers, $card);
+
+			array_push($containers, $card);
 		}
 		array_push($containers, '</div>');
 		return $containers;
@@ -98,17 +100,21 @@ class ListAll
 		$containers = ['<div>'];
 
 		$user = USession::get("currentUser");
-		$card = self::$semantic->htmlCard("card1");
-		$card->addImage("https://semantic-ui.com/images/avatar2/large/kristy.png");
-		$card->addItemHeaderContent("Kristy", "Joined in 2013", "Kristy is an art director living in New York.");
-		$card->addExtraContent("22 Friends")->addIcon("user");
-<<<<<<< HEAD
-		
-		$containers[]=$card;
+		$form = self::$semantic->htmlForm("frm1-5");
+		$form->addMessage("", new HtmlList("", array($user->getFname(), $user->getname())), "Bienvenue dans votre Espace", "user");
+		$fields = $form->addFields();
+		$fields->addInput("first-name", "First-name",$user->getFname())->addRule("empty");
+		$fields->addInput("last-name", "Last-name",$user->getname())->addRule("empty");
+		$form->addInput("password", "Password", "password")->addRules(["empty", "minLength[6]"]);
+		$form->addInput("password", "Re-Password", "password")->addRules(["empty", "minLength[6]"]);
+		$form->addCheckbox("ckAgree", "Je souhaite modifier mes informations personnelles", NULL, "toggle")->addRule("checked");
+		$form->addButton("btSubmit10", "Submit")->asSubmit();
+		$form->addErrorMessage();
+
+
+
+		$containers[] = $form;
 		array_push($containers, '</div>');
 		return $containers;
-=======
-		return $card;
->>>>>>> e55da5a9a256f13b4ce5672aa2109698fc1833cb
 	}
 }
