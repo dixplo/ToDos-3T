@@ -1,5 +1,6 @@
 <?php
 namespace controllers;
+
 use controllers\crud\datas\UsersAdminDatas;
 use Ubiquity\controllers\crud\CRUDDatas;
 use controllers\crud\viewers\UsersAdminViewer;
@@ -8,37 +9,46 @@ use controllers\crud\events\UsersAdminEvents;
 use Ubiquity\controllers\crud\CRUDEvents;
 use controllers\crud\files\UsersAdminFiles;
 use Ubiquity\controllers\crud\CRUDFiles;
+use models\User;
 
- /**
+/**
  * CRUD Controller UsersAdmin
- **/
-class UsersAdmin extends \Ubiquity\controllers\crud\CRUDController{
+ */
+class UsersAdmin extends \Ubiquity\controllers\crud\CRUDController {
 
-	public function __construct(){
+	public function __construct() {
 		parent::__construct();
 		\Ubiquity\orm\DAO::start();
-		$this->model="models\\User";
+		$this->model = User::class;
 	}
 
 	public function _getBaseRoute() {
 		return 'UsersAdmin';
 	}
-	
-	protected function getAdminData(): CRUDDatas{
+
+	protected function getAuthController(): AtcCtrl {
+		return new AtcCtrl();
+	}
+
+	protected function getAdminData(): CRUDDatas {
 		return new UsersAdminDatas($this);
 	}
 
-	protected function getModelViewer(): ModelViewer{
+	protected function getModelViewer(): ModelViewer {
 		return new UsersAdminViewer($this);
 	}
 
-	protected function getEvents(): CRUDEvents{
+	protected function getEvents(): CRUDEvents {
 		return new UsersAdminEvents($this);
 	}
 
-	protected function getFiles(): CRUDFiles{
+	protected function getFiles(): CRUDFiles {
 		return new UsersAdminFiles();
 	}
 
-
+	public function form() {
+		$user = new User();
+		$user->_new = true;
+		$this->_edit($user);
+	}
 }
