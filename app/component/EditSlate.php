@@ -30,8 +30,10 @@ class EditSlate
         $menu = self::$semantic->htmlMenu("vertcalMenu");
         $menu->addMenuAsItem([$slate->getUser()->getEmail()], "<h1>" . $slate->getTitle() . "</h1>");
         $usersEmail = [];
-        foreach ($slate->getUsers() as $user) {
-            $usersEmail[] = $user->getEmail();
+        if (!empty($slate->getUsers())) {
+            foreach ($slate->getUsers() as $user) {
+                $usersEmail[] = $user->getEmail();
+            }
         }
         $menu->addMenuAsItem($usersEmail, "Users list");
         $menu->setVertical();
@@ -39,16 +41,20 @@ class EditSlate
         array_push($containers, $menu . '</div>');
         return $containers;
     }
+    public static function formAddItem(){
+
+        $form = self::$semantic->htmlForm("frm1");
+        $form->addErrorMessage();
+        $form->addInput("itemLabel", "Label", "text", "", "ToDo...")->addRule("empty");
+        $form->addButton("btSubmit1", "Submit")->asSubmit();
+        $form->submitOn("click", "btSubmit1", "todo/addItem", "#response", ['hasLoader' => false]);
+        return $form;
+
+    }
     public static function dataTable($slate)
     {
         $containers = ['<div class="ui container slate"><div class="liste">'];
-        
-			$form = self::$semantic->htmlForm("frm1");
-			$form->addErrorMessage();
-			$form->addInput("itemLabel", "Label", "text", "", "ToDo...")->addRule("empty");
-			$form->addButton("btSubmit1", "Submit")->asSubmit();
-			$form->submitOn("click", "btSubmit1", "todo/addItem", "#response", ['hasLoader' => false]);
-        $containers[] = $form;
+        $containers[] = self::formAddItem();
         $items = $slate->getItems(); // toutes les items de la liste
         $nameItems = [];
         $nbchecked = 0;
