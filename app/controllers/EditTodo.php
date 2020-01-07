@@ -1,4 +1,5 @@
 <?php
+
 namespace controllers;
 
 use component\EditSlate;
@@ -15,11 +16,15 @@ use Ubiquity\utils\http\USession;
  * @route("todo", "automated"=>'true')
  * @property \Ajax\php\ubiquity\JsUtils $jquery
  */
-class EditTodo extends ControllerBase {
+class EditTodo extends ControllerBase
+{
 
-	public function index() {}
+	public function index()
+	{
+	}
 
-	public function initialize() {
+	public function initialize()
+	{
 		parent::initialize();
 		EditSlate::$semantic = $this->jquery->semantic();
 	}
@@ -27,29 +32,34 @@ class EditTodo extends ControllerBase {
 	/*
 	 * @route("editSlate/{id}");
 	 */
-	public function editSlate($id) {
+	public function editSlate($id)
+	{
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
 		$user = USession::get("currentUser");
 
-		if (! is_null($slate) && in_array($user->getEmail(), $slate->getUsers())) { // Slate valide ( on affiche la slate)
-			USession::set("idSlate", $id);
+		if (!is_null($slate)) { // Slate valide ( on affiche la slate)
+			if (in_array($user->getEmail(), $slate->getUsers()) || $user->getEmail() == $slate->getUser()->getEmail()) {
+				USession::set("idSlate", $id);
 
-			$form = $this->jquery->semantic()->htmlForm("frm1");
-			$form->addErrorMessage();
-			$form->addInput("itemLabel", "Label", "text", "", "ToDo...")->addRule("empty");
-			$form->addButton("btSubmit1", "Submit")->asSubmit();
-			$form->submitOn("click", "btSubmit1", "todo/addItem", "#response", [
-				'hasLoader' => false
-			]);
-			// echo $form;
-			$containerss = EditSlate::home($slate);
-			// $this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
-			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", [
-				'attr' => 'data-value',
-				'hasLoader' => false
-			]);
-			// $this->jquery->getOnClick("#div-inputAddItem button", "todo/addItem", ".liste", ['attr' => 'class', 'hasLoader' => false]);
-			$this->jquery->renderDefaultView(compact('containerss'));
+				$form = $this->jquery->semantic()->htmlForm("frm1");
+				$form->addErrorMessage();
+				$form->addInput("itemLabel", "Label", "text", "", "ToDo...")->addRule("empty");
+				$form->addButton("btSubmit1", "Submit")->asSubmit();
+				$form->submitOn("click", "btSubmit1", "todo/addItem", "#response", [
+					'hasLoader' => false
+				]);
+				// echo $form;
+				$containerss = EditSlate::home($slate);
+				// $this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
+				$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", [
+					'attr' => 'data-value',
+					'hasLoader' => false
+				]);
+				// $this->jquery->getOnClick("#div-inputAddItem button", "todo/addItem", ".liste", ['attr' => 'class', 'hasLoader' => false]);
+				$this->jquery->renderDefaultView(compact('containerss'));
+			} else { // user invalide return la page Home
+				UResponse::header("Location", "/Home");
+			}
 		} else { // slate invalide return la page Home
 			UResponse::header("Location", "/Home");
 		}
@@ -61,12 +71,13 @@ class EditTodo extends ControllerBase {
 	 *
 	 * @return void on affiche directement sur la page la liste
 	 */
-	public function checkedlist($id) {
+	public function checkedlist($id)
+	{
 		$item = DAO::getById(Item::class, $id, [
 			'slate.items'
 		]);
 		if (isset($item)) {
-			$newck = ! $item->getChecked();
+			$newck = !$item->getChecked();
 			$item->setChecked($newck);
 			$date = date('Y-m-d H:i:s');
 			$item->setDateM($date);
@@ -76,13 +87,13 @@ class EditTodo extends ControllerBase {
 			$nbchecked = 0;
 			foreach ($items as $mitem) {
 				if ($mitem->getChecked() == 1) {
-					$nbchecked ++;
+					$nbchecked++;
 				}
 			}
 			$this->jquery->semantic()->toast('body', [
 				'message' => 'Change saved'
 			]);
-			$newck ? $nbchecked ++ : $nbchecked --;
+			$newck ? $nbchecked++ : $nbchecked--;
 			$ck = $newck ? 'checked' : 'unchecked';
 			$this->jquery->execAtLast("$('tr[data-ajax=\"{$id}\"] .ui.checkbox').checkbox('set {$ck}');");
 			$percent = $nbchecked / count($items) * 100;
@@ -91,7 +102,8 @@ class EditTodo extends ControllerBase {
 		}
 	}
 
-	public function addItem() {
+	public function addItem()
+	{
 		$label = URequest::post("itemLabel", "faut");
 		$idSlate = USession::get("idSlate");
 		$item = new Item();
@@ -111,7 +123,8 @@ class EditTodo extends ControllerBase {
 		echo $this->jquery->compile();
 	}
 
-	public function refreshItems() {
+	public function refreshItems()
+	{
 		$items = DAO::getById(Slate::class, USession::get("idSlate"))->getItems();
 		$dt = $this->jquery->semantic()->dataTable('dataTableSlate', $items);
 		// creation normale du dataTable
@@ -125,7 +138,8 @@ class EditTodo extends ControllerBase {
 	 *
 	 * @return void
 	 */
-	public function update() {
+	public function update()
+	{
 		if (URequest::isPost()) {
 			$user = DAO::getOne("models\User", URequest::post("id"));
 			URequest::setPostValuesToObject($user);
@@ -133,7 +147,8 @@ class EditTodo extends ControllerBase {
 		}
 	}
 
-	public function delete($id) {
+	public function delete($id)
+	{
 		DAO::delete(Item::class, $id);
 	}
 
