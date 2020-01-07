@@ -3,11 +3,7 @@
 {{css('css/style_EditTodo.css') | raw }}
 {% endblock %}
 <div class="block">
-    {% for containers in containerss %}
-        {% for container in containers %}
-            {{ container | raw }}
-        {% endfor %}
-    {% endfor %}
+    {{ containers | raw }}
 </div>
 <div id="response"></div>
 {{script_foot|raw}}

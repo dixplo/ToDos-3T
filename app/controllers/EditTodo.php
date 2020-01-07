@@ -49,14 +49,14 @@ class EditTodo extends ControllerBase
 					'hasLoader' => false
 				]);
 				// echo $form;
-				$containerss = EditSlate::home($slate);
+				$containers = EditSlate::home($slate);
 				// $this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
-				$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", [
+				$this->jquery->getOn( "click", "tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", [
 					'attr' => 'data-value',
 					'hasLoader' => false
 				]);
 				// $this->jquery->getOnClick("#div-inputAddItem button", "todo/addItem", ".liste", ['attr' => 'class', 'hasLoader' => false]);
-				$this->jquery->renderDefaultView(compact('containerss'));
+				$this->jquery->renderDefaultView(compact('containers'));
 			} else { // user invalide return la page Home
 				UResponse::header("Location", "/Home");
 			}
@@ -116,7 +116,7 @@ class EditTodo extends ControllerBase
 
 		DAO::save($item);
 		$this->jquery->execAtLast("$('#frm1').form('clear')");
-		$this->jquery->get('todo/refreshItems', '#dataTableSlate tbody', [
+		$this->jquery->get('todo/refreshItems', '#dataTableItems', [
 			'jqueryDone' => 'replaceWith',
 			'hasLoader' => false
 		]);
@@ -128,8 +128,8 @@ class EditTodo extends ControllerBase
 		$items = DAO::getById(Slate::class, USession::get("idSlate"))->getItems();
 		$dt = $this->jquery->semantic()->dataTable('dataTableSlate', $items);
 		// creation normale du dataTable
-		$dt->refresh();
-		$this->jquery->renderDefaultView();
+		$dt = EditSlate::dataTable(DAO::getById(Slate::class, USession::get("idSlate")));
+		echo $dt;
 		echo $this->jquery->compile();
 	}
 
@@ -138,7 +138,7 @@ class EditTodo extends ControllerBase
 	 *
 	 * @return void
 	 */
-	public function update()
+	public function updateUser()
 	{
 		if (URequest::isPost()) {
 			$user = DAO::getOne("models\User", URequest::post("id"));
