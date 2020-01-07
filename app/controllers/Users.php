@@ -45,7 +45,8 @@ class Users extends \Ubiquity\controllers\crud\CRUDController {
 	}
 
 	public function form() {
-		$this->loadView("Users/frmAdd.html");
+		$this->jquery->postFormOnClick('#submitUserBt', '/Users/addUsers', 'addUserFrm', '#response');
+		$this->jquery->renderView('Users/frmAdd.html');
 	}
 
 	public function addUsers() {
