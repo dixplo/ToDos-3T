@@ -3,75 +3,11 @@
 {{css('css/style_EditTodo.css') | raw }}
 {% endblock %}
 <div class="block">
-    <div class="ui vertical menu">
-        <div class="item">
-            <div class="header">{{slate.title| raw}}</div>
-            <div class="menu">
-                <a class="item">{{slate.user| raw}}</a>
-                <a class="item">Python</a>
-                <a class="item">PHP</a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="header">CMS Solutions</div>
-            <div class="menu">
-                <a class="item">Rails</a>
-                <a class="item">Python</a>
-                <a class="item">PHP</a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="header">Hosting</div>
-            <div class="menu">
-                <a class="item">Shared</a>
-                <a class="item">Dedicated</a>
-            </div>
-        </div>
-        <div class="item">
-            <div class="header">Support</div>
-            <div class="menu">
-                <a class="item">E-mail Support</a>
-                <a class="item">FAQs</a>
-            </div>
-        </div>
-        <div class="save">
-
-            <button class="ui primary button">
-                Save
-            </button>
-        </div>
-    </div>
-
-    <div class="ui container slate">
-        <h1 class="ui header">{{title| raw}} </h1>
-        <p></p>
-        <h5>changer le style de la liste</h3>
-            <p></p>
-            <div class="ui icon buttons">
-                <button class="ui button"><i class="bold icon"></i></button>
-                <button class="ui button"><i class="remove format icon"></i></button>
-                <button class="ui button"><i class="text width icon"></i></button>
-                <button class="ui button"><i class="text height icon"></i></button>
-            </div>
-
-            <div class="ui icon buttons">
-                <button class="ui button"><i class="list ul icon"></i></button>
-                <button class="ui button"><i class="list ol icon"></i></button>
-                <button class="ui button"><i class="circle outline icon"></i></button>
-                <button class="ui button"><i class="calendar alternate outline icon"></i></button>
-            </div>
-            <p></p>
-            <div class="ui action input">
-                <input type="text" placeholder="Add...">
-                <button class="ui icon button addItem">
-                    <i class="plus icon"></i>
-                </button>
-            </div>
-            <p></p>
-            <p></p>
-            <div class="liste">
-                {{list| raw}}
-            </div>
-    </div>
+    {% for containers in containerss %}
+        {% for container in containers %}
+            {{ container | raw }}
+        {% endfor %}
+    {% endfor %}
 </div>
+<div id="response"></div>
 {{script_foot|raw}}

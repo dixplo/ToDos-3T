@@ -1,119 +1,123 @@
 <?php
-
 namespace controllers;
 
-use Ajax\php\ubiquity\JsUtils;
-use Ajax\semantic\html\base\constants\TextAlignment;
+use component\EditSlate;
 use models\Item;
 use models\Slate;
-use Ubiquity\controllers\Startup;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\http\URequest;
 use Ubiquity\utils\http\UResponse;
+use Ubiquity\utils\http\USession;
 
 /**
  * Controller EditTodo
- * @route("todo") 
- * @property JsUtils $jquery
- **/
-class EditTodo extends ControllerBase
-{
+ *
+ * @route("todo", "automated"=>'true')
+ * @property \Ajax\php\ubiquity\JsUtils $jquery
+ */
+class EditTodo extends ControllerBase {
 
+	public function index() {}
 
-	public function index()
-	{
+	public function initialize() {
+		parent::initialize();
+		EditSlate::$semantic = $this->jquery->semantic();
 	}
+
 	/*
-	* @route("editSlate/{id}");
-	*/
-	public function editSlate($id)
-	{
+	 * @route("editSlate/{id}");
+	 */
+	public function editSlate($id) {
 		$slate = DAO::getById(Slate::class, $id); // recup la slate depuis l'id
-		if (!is_null($slate) && is_int(intval($id))) { // Slate valide ( on affiche la slate)
+		$user = USession::get("currentUser");
 
-			$title = $slate->getTitle(); // titre de la liste
-			$items = $slate->getItems(); // toutes les items de la liste
-			$semantic = $this->jquery->semantic();
-			$nameItems = [];
-			foreach ($items as $item) {
-				array_push($nameItems, $item->getLabel());
-			}
-			$list = $semantic->dataTable("lv2-3", Item::class, $items);
-			$fields = ["label"];
-			$captions = ["Label"];
-			if ($slate->getTemplate()->getId() == 2) {
-				$fields[] = "checked";
-				$captions[] = "Checked";
-			}
-			$captions[] = "Actions";
-			$list->setFields($fields);
-			$list->setCaptions($captions);
-			$list->fieldAsCheckbox("checked");
-			$list->addEditDeleteButtons(true, ["ajaxTransition" => "random"]);
-			$list->setUrls(["sTest/search", "sTest/edit", "sTest/delete"]); // modifier
-			$list->setTargetSelector("#lv2-3-update");
-			$list->onPreCompile(function ($list) {
-				$list->setColAlignment(1, TextAlignment::RIGHT);
+		if (! is_null($slate) && in_array($user->getEmail(), $slate->getUsers())) { // Slate valide ( on affiche la slate)
+			USession::set("idSlate", $id);
 
-				// button addItem
-				$this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-ajax']);
-			});
-			
-			$this->jquery->getOnClick('#monButton', "todo/checkedlist", "#response", ['attr' => 'data-ajax']);
-			$this->jquery->renderDefaultView(compact('slate', 'list'));
+			$form = $this->jquery->semantic()->htmlForm("frm1");
+			$form->addErrorMessage();
+			$form->addInput("itemLabel", "Label", "text", "", "ToDo...")->addRule("empty");
+			$form->addButton("btSubmit1", "Submit")->asSubmit();
+			$form->submitOn("click", "btSubmit1", "todo/addItem", "#response", [
+				'hasLoader' => false
+			]);
+			// echo $form;
+			$containerss = EditSlate::home($slate);
+			// $this->jquery->getOnClick('ui.icon.button.addItem', "todo/editSlate/ajoutItem", "body", ['attr' => 'data-field']);
+			$this->jquery->getOnClick("tbody tr td[data-field=\"checked\"] label", "todo/checkedlist/", "#response", [
+				'attr' => 'data-value',
+				'hasLoader' => false
+			]);
+			// $this->jquery->getOnClick("#div-inputAddItem button", "todo/addItem", ".liste", ['attr' => 'class', 'hasLoader' => false]);
+			$this->jquery->renderDefaultView(compact('containerss'));
 		} else { // slate invalide return la page Home
 			UResponse::header("Location", "/Home");
 		}
 	}
-	
+
 	/**
-	 * checkedlist 
+	 * checkedlist
 	 * recupere les liste checked avec leur %
-	 * @param  int $id de la list (ex: 1 ==> Mes courses)
 	 *
 	 * @return void on affiche directement sur la page la liste
 	 */
-	public function checkedlist($id)
-	{
-		$item = DAO::getById(Item::class, $id, ['slate.items']);
+	public function checkedlist($id) {
+		$item = DAO::getById(Item::class, $id, [
+			'slate.items'
+		]);
 		if (isset($item)) {
-			$newck = !$item->getChecked();
+			$newck = ! $item->getChecked();
 			$item->setChecked($newck);
+			$date = date('Y-m-d H:i:s');
+			$item->setDateM($date);
 			DAO::save($item);
 			$items = $item->getSlate()->getItems();
 
 			$nbchecked = 0;
 			foreach ($items as $mitem) {
 				if ($mitem->getChecked() == 1) {
-					$nbchecked++;
+					$nbchecked ++;
 				}
 			}
-			$this->jquery->semantic()->toast('body', ['message' => 'Change saved']);
-			$newck ? $nbchecked++ : $nbchecked--;
+			$this->jquery->semantic()->toast('body', [
+				'message' => 'Change saved'
+			]);
+			$newck ? $nbchecked ++ : $nbchecked --;
 			$ck = $newck ? 'checked' : 'unchecked';
-			$this->jquery->execAtLast("$(\"tr[data-ajax='{$id}'] .ui.checkbox\").checkbox('set {$ck}');");
+			$this->jquery->execAtLast("$('tr[data-ajax=\"{$id}\"] .ui.checkbox').checkbox('set {$ck}');");
 			$percent = $nbchecked / count($items) * 100;
 			$this->jquery->execAtLast("$(\".ui.progress\").progress({percent: {$percent}});");
 			echo $this->jquery->compile();
 		}
 	}
 
-	public function ajoutItem()
-	{
-		$slate = DAO::getOne(Slate::class, 1);
-		$id = $slate->getId();
-		echo $id;
-		/*
-		$orga = DAO::getOne(Organization::class, 1);
-		$user = new User();
-		$user->setFirstname('DOE');
-		$user->setLastname('John');
-		$user->setEmail('doe@bar.net');
-		$user->setOrganization($orga);
-		if (DAO::save($user)) {
-			echo $user . ' added in database in ' . $orga;
-		}
-		*/
+	public function addItem() {
+		$label = URequest::post("itemLabel", "faut");
+		$idSlate = USession::get("idSlate");
+		$item = new Item();
+		$item->setLabel($label);
+		$item->setSlate(DAO::getById(Slate::class, $idSlate));
+
+		$date = date('Y-m-d H:i:s');
+		$item->setDateC($date);
+		$item->setDateM($date);
+
+		DAO::save($item);
+		$this->jquery->execAtLast("$('#frm1').form('clear')");
+		$this->jquery->get('todo/refreshItems', '#dataTableSlate tbody', [
+			'jqueryDone' => 'replaceWith',
+			'hasLoader' => false
+		]);
+		echo $this->jquery->compile();
+	}
+
+	public function refreshItems() {
+		$items = DAO::getById(Slate::class, USession::get("idSlate"))->getItems();
+		$dt = $this->jquery->semantic()->dataTable('dataTableSlate', $items);
+		// creation normale du dataTable
+		$dt->refresh();
+		$this->jquery->renderDefaultView();
+		echo $this->jquery->compile();
 	}
 
 	/**
@@ -121,8 +125,7 @@ class EditTodo extends ControllerBase
 	 *
 	 * @return void
 	 */
-	public function update()
-	{
+	public function update() {
 		if (URequest::isPost()) {
 			$user = DAO::getOne("models\User", URequest::post("id"));
 			URequest::setPostValuesToObject($user);
@@ -130,18 +133,20 @@ class EditTodo extends ControllerBase
 		}
 	}
 
-
+	public function delete($id) {
+		DAO::delete(Item::class, $id);
+	}
 
 	/*
-	public function finalize() {
-		parent::finalize();
-		$this->jquery->execAtLast("$('.btn-menu').click(function(){
-			$('.ui.sidebar')
-			.sidebar({
-				context: $('body')
-			})
-			.sidebar('attach events', '.container .menu .item');
-		});");
-	}
-	*/
+	 * public function finalize() {
+	 * parent::finalize();
+	 * $this->jquery->execAtLast("$('.btn-menu').click(function(){
+	 * $('.ui.sidebar')
+	 * .sidebar({
+	 * context: $('body')
+	 * })
+	 * .sidebar('attach events', '.container .menu .item');
+	 * });");
+	 * }
+	 */
 }
