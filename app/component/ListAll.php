@@ -100,13 +100,24 @@ class ListAll
 		$containers = ['<div>'];
 
 		$user = USession::get("currentUser");
-		$card = self::$semantic->htmlCard("card1");
-		$card->addImage("https://semantic-ui.com/images/avatar2/large/kristy.png");
-		$card->addItemHeaderContent("Kristy", "Joined in 2013", "Kristy is an art director living in New York.");
-		$card->addExtraContent("22 Friends")->addIcon("user");
+		$form = self::$semantic->htmlForm("frm1-5");
+		$form->addMessage("", new HtmlList("", array($user->getFname(), $user->getname())), "Bienvenue dans votre Espace", "user");
+		$fields = $form->addFields();
+		$fields->addInput("first-name", "First-name",$user->getFname())->addRule("empty");
+		$fields->addInput("last-name", "Last-name",$user->getname())->addRule("empty");
+		$form->addInput("password", "Password", "password")->addRules(["empty", "minLength[6]"]);
+		$form->addCheckbox("ckAgree", "Je souhaite modifier mes informations personnelles", NULL, "toggle")->addRule("checked");
+		$form->addButton("btSubmit10", "Submit");
+		$form->submitOn("click", "btSubmit10", "Home/changeInfos","", ['hasLoader' => false]);
+		$form->addErrorMessage();
+
+
 		
-		$containers[]=$card;
+
+		$containers[] = $form;
 		array_push($containers, '</div>');
 		return $containers;
+		
+
 	}
 }
