@@ -7,6 +7,8 @@ use models\Slate;
 use models\Template;
 use Ubiquity\orm\DAO;
 use Ubiquity\utils\http\USession;
+use Ajax\semantic\html\collections\form\HtmlFormInput;
+use Ajax\semantic\html\elements\HtmlList;
 
 class ListAll
 {
@@ -39,9 +41,9 @@ class ListAll
 			$card->asLink("todo/editSlate/" . $list->getId());
 			$card->addClass("perso todo");
 			$card->setTagName('a');
-			
-			if ($list->getTemplate()->getId()==2) {
-				$nbCheked =0;
+
+			if ($list->getTemplate()->getId() == 2) {
+				$nbCheked = 0;
 				foreach ($items as $item) {
 					if ($item->getChecked() == 1) {
 						$nbCheked++;
@@ -85,8 +87,8 @@ class ListAll
 			//$card->asLink("todo/editSlate/".$list->getId());
 			$card->addClass("perso template");
 			$card->setTagName('a');
-				        
-	        array_push($containers, $card);
+
+			array_push($containers, $card);
 		}
 		array_push($containers, '</div>');
 		return $containers;
