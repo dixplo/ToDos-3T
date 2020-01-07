@@ -7,3 +7,4 @@ app/cache/
 .vscode/
 app/config/
 app/logs/
+.idea/

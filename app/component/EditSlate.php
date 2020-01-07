@@ -19,13 +19,10 @@ class EditSlate
 
     public static function home($slate)
     {
-        $containers = [];
-        array_push($containers, self::menu($slate));
-        array_push($containers, self::dataTable($slate));
-        return $containers;
+        return '<div>' . self::leftMenu($slate) . '</div>'.'<div class="ui container slate"><div class="liste">' . self::formAddItem() .'<div id="dataTableItems">'. self::dataTable($slate) . '</div>' . '</div>' . '</div>';
     }
 
-    private static function menu($slate)
+    private static function leftMenu($slate)
     {
         $menu = self::$semantic->htmlMenu("vertcalMenu");
         $menu->addMenuAsItem([$slate->getUser()->getEmail()], "<h1>" . $slate->getTitle() . "</h1>");
@@ -37,11 +34,10 @@ class EditSlate
         }
         $menu->addMenuAsItem($usersEmail, "Users list");
         $menu->setVertical();
-        $containers = ['<div>'];
-        array_push($containers, $menu . '</div>');
-        return $containers;
+        return $menu;
     }
-    public static function formAddItem(){
+    public static function formAddItem()
+    {
 
         $form = self::$semantic->htmlForm("frm1");
         $form->addErrorMessage();
@@ -49,12 +45,9 @@ class EditSlate
         $form->addButton("btSubmit1", "Submit")->asSubmit();
         $form->submitOn("click", "btSubmit1", "todo/addItem", "#response", ['hasLoader' => false]);
         return $form;
-
     }
     public static function dataTable($slate)
     {
-        $containers = ['<div class="ui container slate"><div class="liste">'];
-        $containers[] = self::formAddItem();
         $items = $slate->getItems(); // toutes les items de la liste
         $nameItems = [];
         $nbchecked = 0;
@@ -91,7 +84,6 @@ class EditSlate
         $list->onPreCompile(function ($list) {
             $list->setColAlignment(1, TextAlignment::RIGHT);
         });
-        array_push($containers, $list . "</div></div>");
-        return $containers;
+        return $list;
     }
 }

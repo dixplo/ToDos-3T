@@ -54,6 +54,7 @@ class Home extends ControllerBase
 	public function changeInfos()
 	{
 		$user = USession::get("currentUser");
+		
 		$fname = URequest::post("first-name");
 		$name = URequest::post("last-name");
 		$password = URequest::post("password");
